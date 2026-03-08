@@ -22,7 +22,7 @@ namespace Chaos
                 .Where(file => Path.GetExtension(file) != ".meta")
                 .Select(file => Path.GetRelativePath(Application.streamingAssetsPath, file).Replace('\\', '/'))
                 .ToList();
-            File.WriteAllText("Assets/Resources/StreamingAssetsManifest.json", JsonSerializer.Serialize(files));
+            File.WriteAllText("Assets/Resources/WebUIManifest.json", JsonSerializer.Serialize(files));
 #else
             _ = InitializeAsync();
 #endif

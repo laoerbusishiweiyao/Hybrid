@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "10ACAC1YL1001YU",
         "name": "com.chaosstudio.demo",
-        "processId": 25782,
+        "processId": 24187,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -120,6 +120,18 @@
             "deviceId": "10ACAC1YL1001YU",
             "name": "com.chaosstudio.demo",
             "processId": 25782,
+            "exited": false
+        },
+        {
+            "deviceId": "10ACAC1YL1001YU",
+            "name": "com.chaosstudio.demo",
+            "processId": 26684,
+            "exited": false
+        },
+        {
+            "deviceId": "10ACAC1YL1001YU",
+            "name": "com.chaosstudio.demo",
+            "processId": 24187,
             "exited": false
         }
     ],
