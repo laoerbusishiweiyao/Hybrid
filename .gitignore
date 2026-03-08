@@ -1,5 +1,7 @@
 # Unity
 
+Unity/.idea/
+Unity/.utmp/
 Unity/Library/
 Unity/Logs/
 Unity/obj/
@@ -9,19 +11,40 @@ Unity/*.csproj
 # Native Android
 
 Native/Android/**/*.iml
-Native/Android/.gradle
-Native/Android//local.properties
-Native/Android/.idea/caches
-Native/Android/.idea/libraries
-Native/Android/.idea/modules.xml
-Native/Android/.idea/workspace.xml
-Native/Android/.idea/navEditor.xml
-Native/Android/.idea/assetWizardSettings.xml
+Native/Android/.gradle/
+Native/Android/.idea/
+Native/Android/.kotlin/
+Native/Android/local.properties
 Native/Android/.DS_Store
-Native/Android/build
-Native/Android/captures
-Native/Android/.externalNativeBuild
-Native/Android/.cxx
+Native/Android/build/
+Native/Android/captures/
+Native/Android/.externalNativeBuild/
+Native/Android/.cxx/
 Native/Android/local.properties
 
-Native/Android/NativeBridge/build
+Native/Android/NativeBridge/build/
+
+# Web
+
+Web/unity-web-ui/logs
+Web/unity-web-ui/*.log
+Web/unity-web-ui/npm-debug.log*
+Web/unity-web-ui/yarn-debug.log*
+Web/unity-web-ui/yarn-error.log*
+Web/unity-web-ui/pnpm-debug.log*
+Web/unity-web-ui/lerna-debug.log*
+
+Web/unity-web-ui/node_modules
+Web/unity-web-ui/dist
+Web/unity-web-ui/dist-ssr
+Web/unity-web-ui/*.local
+
+Web/unity-web-ui/.vscode/*
+Web/unity-web-ui/!.vscode/extensions.json
+Web/unity-web-ui/.idea
+Web/unity-web-ui/.DS_Store
+Web/unity-web-ui/*.suo
+Web/unity-web-ui/*.ntvs*
+Web/unity-web-ui/*.njsproj
+Web/unity-web-ui/*.sln
+Web/unity-web-ui/*.sw?

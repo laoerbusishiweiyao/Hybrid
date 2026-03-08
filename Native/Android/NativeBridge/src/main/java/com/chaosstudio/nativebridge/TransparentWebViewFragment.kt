@@ -66,7 +66,7 @@ class TransparentWebViewFragment : Fragment() {
 
             addJavascriptInterface(UnityBridge(), WebBridgeName)
 
-            loadUrl("https://chaos.com")
+            loadUrl(NativeBridgeSettings.webViewOptions.entryUrl)
         }
 
         layout.addView(

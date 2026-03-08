@@ -7,7 +7,9 @@ object WebBridge {
     const val WEB_VIEW_TAG = "WebViewFragment"
 
     @JvmStatic
-    fun load(context: Context) {
+    fun load(context: Context, options: String) {
+        NativeBridgeSettings.update(options)
+
         unload(context)
 
         if (context is FragmentActivity) {

@@ -10,23 +10,22 @@ import java.io.File
 import java.io.FileInputStream
 import java.net.URLConnection
 
-open class StandaloneWebViewClient(private val context: Context, private val domain: String = "chaos.com") : WebViewClient() {
-    val persistentBaseFolder = "WebUI"
-
+open class StandaloneWebViewClient(private val context: Context) : WebViewClient() {
     override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
         val url = request?.url ?: return super.shouldInterceptRequest(view, request)
 
-        if (url.host == domain) {
-            return loadFromPersistentDataPath(url.path ?: "/")
+        if (url.host == NativeBridgeSettings.webViewOptions.localAssetDomain) {
+            val path = url.path?.takeIf { it.isNotEmpty() } ?: "/"
+            return loadFromPersistentDataPath(path, NativeBridgeSettings.webViewOptions.assetFolderName)
         }
 
         return super.shouldInterceptRequest(view, request)
     }
 
-    private fun loadFromPersistentDataPath(url: String): WebResourceResponse {
+    private fun loadFromPersistentDataPath(url: String, assetFolderName: String): WebResourceResponse {
         val mimeType = if (url == "/") "text/html" else URLConnection.guessContentTypeFromName(url)
         val path = if (url == "/") "index.html" else url
-        val file = File(context.getExternalFilesDir(persistentBaseFolder), path)
+        val file = File(context.getExternalFilesDir(assetFolderName), path)
 
         return try {
             return WebResourceResponse(mimeType, "UTF-8", FileInputStream(file))

@@ -14,6 +14,10 @@ class UnityBridge {
             log(LogLevel.Information, message)
         }
 
+        fun error(message: String) {
+            log(LogLevel.Error, message)
+        }
+
         private fun log(level: Int, message: String) {
             val document = JSONObject()
 
@@ -22,7 +26,7 @@ class UnityBridge {
             logEntry.put("level", level)
             logEntry.put("message", message)
 
-            document.put("opcode", 10011)
+            document.put("opcode", NativeBridgeSettings.webViewOptions.logEntryOpcode)
             document.put("payload", logEntry)
 
             UnityPlayer.UnitySendMessage(UnityGameObjectName, UnityMethodName, document.toString())
