@@ -24,6 +24,12 @@ Native/Android/local.properties
 
 Native/Android/NativeBridge/build/
 
+# Native Windows
+
+Native/Windows/Hybrid.Windows/.idea/
+Native/Windows/Hybrid.Windows/**/bin/
+Native/Windows/Hybrid.Windows/**/obj/
+
 # Web
 
 Web/unity-web-ui/logs
