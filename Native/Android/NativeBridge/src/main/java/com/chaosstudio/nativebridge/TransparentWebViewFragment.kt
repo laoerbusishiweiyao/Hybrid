@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
@@ -24,22 +25,42 @@ class TransparentWebViewFragment : Fragment() {
             setBackgroundColor(Color.TRANSPARENT)
         }
 
+        val options = NativeBridgeSettings.webViewOptions
+
         webView = WebView(requireContext()).apply {
             background = null
             setBackgroundColor(Color.TRANSPARENT)
-            isFocusable = false
-            isFocusableInTouchMode = false
-            isClickable = true
-            isEnabled = true
+            isFocusable = options.focusable
+            isFocusableInTouchMode = options.focusableInTouchMode
+            isClickable = options.clickable
+            isEnabled = options.enabled
 
             settings.apply {
-                javaScriptEnabled = true
-                domStorageEnabled = true
-                useWideViewPort = true
-                loadWithOverviewMode = true
-                setSupportZoom(false)
-                builtInZoomControls = false
-                displayZoomControls = false
+                javaScriptEnabled = options.javaScriptEnabled
+                domStorageEnabled = options.domStorageEnabled
+                useWideViewPort = options.useWideViewPort
+                loadWithOverviewMode = options.loadWithOverviewMode
+                setSupportZoom(options.supportZoom)
+                builtInZoomControls = options.builtInZoomControls
+                displayZoomControls = options.displayZoomControls
+                textZoom = options.textZoom
+                if (options.initialScale > 0) {
+                    setInitialScale(options.initialScale)
+                }
+                mediaPlaybackRequiresUserGesture = options.mediaPlaybackRequiresUserGesture
+                allowFileAccess = options.allowFileAccess
+                allowContentAccess = options.allowContentAccess
+                cacheMode = options.cacheMode
+                mixedContentMode = options.mixedContentMode
+
+                options.layoutAlgorithm.let { algo ->
+                    layoutAlgorithm = when (algo.uppercase()) {
+                        "SINGLE_COLUMN" -> WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+                        "NARROW_COLUMNS" -> WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+                        "TEXT_AUTOSIZING" -> WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
+                        else -> WebSettings.LayoutAlgorithm.NORMAL
+                    }
+                }
             }
 
             webViewClient = object : StandaloneWebViewClient(requireContext()) {

@@ -26,7 +26,7 @@ class UnityBridge {
             logEntry.put("level", level)
             logEntry.put("message", message)
 
-            document.put("opcode", NativeBridgeSettings.webViewOptions.logEntryOpcode)
+            document.put("opcode", NativeBridgeSettings.webViewOptions.logEntryOpcode.toInt())
             document.put("payload", logEntry)
 
             UnityPlayer.UnitySendMessage(UnityGameObjectName, UnityMethodName, document.toString())

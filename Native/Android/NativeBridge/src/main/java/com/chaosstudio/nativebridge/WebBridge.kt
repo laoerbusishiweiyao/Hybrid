@@ -1,6 +1,7 @@
 package com.chaosstudio.nativebridge
 
 import android.content.Context
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 
 object WebBridge {
@@ -8,6 +9,7 @@ object WebBridge {
 
     @JvmStatic
     fun load(context: Context, options: String) {
+        Log.i("AndroidNativeBridge", options)
         NativeBridgeSettings.update(options)
 
         unload(context)

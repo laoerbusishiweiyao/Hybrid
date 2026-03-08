@@ -24,27 +24,34 @@ namespace Chaos
 
             MessagePerSecond = messageTimestamps.Count;
 
-            var info = JsonSerializer.Deserialize<WebMessageInfo>(message, AppSettings.JsonSerializerOptions);
-
-            switch (info.Opcode)
+            try
             {
-                case Opcode.WebLoaded:
-                {
-                    GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = WebLoaded" + Environment.NewLine;
-                    break;
-                }
-                case Opcode.WebTouchData when info.Payload is JsonElement jsonElement && jsonElement.Deserialize<WebTouchData>(AppSettings.JsonSerializerOptions) is { } webTouchData:
-                {
-                    GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = {info.Payload}" + Environment.NewLine;
+                var info = JsonSerializer.Deserialize<WebMessageInfo>(message, AppSettings.JsonSerializerOptions);
 
-                    WebInputAdapter.Process(webTouchData);
-                    break;
-                }
-                case Opcode.AndroidLogEntry when info.Payload is JsonElement jsonElement && jsonElement.Deserialize<AndroidLogEntry>(AppSettings.JsonSerializerOptions) is { } androidLogEntry:
+                switch (info.Opcode)
                 {
-                    GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = {info.Payload}" + Environment.NewLine;
-                    break;
+                    case Opcode.WebLoaded:
+                    {
+                        GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = WebLoaded" + Environment.NewLine;
+                        break;
+                    }
+                    case Opcode.WebTouchData when info.Payload is JsonElement jsonElement && jsonElement.Deserialize<WebTouchData>(AppSettings.JsonSerializerOptions) is { } webTouchData:
+                    {
+                        GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = {info.Payload}" + Environment.NewLine;
+
+                        WebInputAdapter.Process(webTouchData);
+                        break;
+                    }
+                    case Opcode.AndroidLogEntry when info.Payload is JsonElement jsonElement && jsonElement.Deserialize<AndroidLogEntry>(AppSettings.JsonSerializerOptions) is { } androidLogEntry:
+                    {
+                        GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = {info.Payload}" + Environment.NewLine;
+                        break;
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError($"反序列化失败: {exception.Message}\n{message}");
             }
         }
 
