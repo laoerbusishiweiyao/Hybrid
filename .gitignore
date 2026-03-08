@@ -2,5 +2,26 @@
 
 Unity/Library/
 Unity/Logs/
+Unity/obj/
 Unity/Temp/
 Unity/*.csproj
+
+# Native Android
+
+Native/Android/**/*.iml
+Native/Android/.gradle
+Native/Android//local.properties
+Native/Android/.idea/caches
+Native/Android/.idea/libraries
+Native/Android/.idea/modules.xml
+Native/Android/.idea/workspace.xml
+Native/Android/.idea/navEditor.xml
+Native/Android/.idea/assetWizardSettings.xml
+Native/Android/.DS_Store
+Native/Android/build
+Native/Android/captures
+Native/Android/.externalNativeBuild
+Native/Android/.cxx
+Native/Android/local.properties
+
+Native/Android/NativeBridge/build
