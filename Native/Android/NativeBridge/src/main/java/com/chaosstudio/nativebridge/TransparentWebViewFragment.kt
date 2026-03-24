@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 class TransparentWebViewFragment : Fragment() {
     private var webView: WebView? = null
 
+    private var isPlatformReady = false
+
     @SuppressLint("ClickableViewAccessibility", "SetJavaScriptEnabled")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         UnityBridge.debug("TransparentWebViewFragment Creating")
@@ -72,6 +74,13 @@ class TransparentWebViewFragment : Fragment() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
                     UnityBridge.debug("onPageFinished: $url")
+
+                    if (!isPlatformReady) {
+                        view?.post {
+                            view.evaluateJavascript("window.dispatchEvent(new CustomEvent('platformReady', { detail: { platform: 'android' } }));", null)
+                        }
+                        isPlatformReady = true
+                    }
                 }
 
                 override fun onLoadResource(view: WebView?, url: String?) {
@@ -98,10 +107,6 @@ class TransparentWebViewFragment : Fragment() {
         )
 
         return layout
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
