@@ -56,7 +56,7 @@ public partial class WebWindow : Window
 
     private void OnLoadingStateChanged(object? sender, LoadingStateChangedEventArgs eventArgs)
     {
-        _ = OnLoadingStateChanged(eventArgs);
+        Application.Current.Dispatcher.InvokeAsync(() => OnLoadingStateChanged(eventArgs));
     }
 
     private async Task OnLoadingStateChanged(LoadingStateChangedEventArgs eventArgs)

@@ -3,9 +3,9 @@ using System.IO;
 using System.IO.Pipelines;
 using System.IO.Pipes;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Channels;
-using MemoryPack;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -25,11 +25,6 @@ public sealed class NamedPipeSession(IOptions<AppSettings> settings) : Backgroun
     public void Send(string message)
     {
         cache.Writer.TryWrite(message);
-    }
-
-    public void Send<T>(ushort opcode, T payload) where T : class, IMessage
-    {
-        cache.Writer.TryWrite(JsonSerializer.Serialize(new MessageInfo { Opcode = opcode, Payload = payload }, AppSettings.DefaultJsonSerializerOptions));
     }
 
     public override Task StartAsync(CancellationToken cancellationToken)
@@ -59,7 +54,7 @@ public sealed class NamedPipeSession(IOptions<AppSettings> settings) : Backgroun
             try
             {
                 var info = JsonSerializer.Deserialize<MessageInfo>(content, AppSettings.DefaultJsonSerializerOptions);
-                if (info is { Opcode: 10204, Payload: JsonElement element } && element.Deserialize<WebMouseData>(AppSettings.DefaultJsonSerializerOptions) is { } payload)
+                if (info?.Payload is JsonElement payload)
                 {
                     await SendAsync(info.Opcode, payload, stoppingToken);
                 }
@@ -79,13 +74,13 @@ public sealed class NamedPipeSession(IOptions<AppSettings> settings) : Backgroun
         await base.StopAsync(cancellationToken);
     }
 
-    public async Task SendAsync<T>(ushort opcode, T message, CancellationToken cancellationToken) where T : class, IMessage
+    public async Task SendAsync(ushort opcode, JsonElement content, CancellationToken cancellationToken)
     {
         var writer = SenderPipe.Writer;
 
         try
         {
-            var payload = MemoryPackSerializer.Serialize(message);
+            var payload = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(content, AppSettings.DefaultJsonSerializerOptions));
 
             var header = writer.GetSpan(6);
             MemoryMarshal.Write(header[..2], opcode);
