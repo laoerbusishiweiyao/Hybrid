@@ -1,24 +1,33 @@
 ﻿using System.Windows;
 using CefSharp;
-using CefSharp.Event;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace Hybrid.Native.Windows;
 
 public partial class WebWindow : Window
 {
-    public WebWindow()
+    private readonly IOptions<AppSettings> settings;
+
+    private readonly NamedPipeSession session;
+
+    public WebWindow(IOptions<AppSettings> settings, NamedPipeSession session)
     {
+        this.settings = settings;
+        this.session = session;
+
+        Log.Information("启动参数: {settings}", settings.Value);
+
         InitializeComponent();
         Loaded += OnLoaded;
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        // this.Owner = WindowComponent.Default.GetWindow<EmbeddedApplicationWindow>();
-        // this.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-        // this.Width = this.Owner.Width;
-        // this.Height = this.Owner.Height;
+        Left = settings.Value.LaunchOptions.Left;
+        Top = settings.Value.LaunchOptions.Top;
+        Width = settings.Value.LaunchOptions.Width;
+        Height = settings.Value.LaunchOptions.Height;
 
         LoadBrowser();
     }
@@ -27,67 +36,57 @@ public partial class WebWindow : Window
     {
         Browser.LifeSpanHandler = new LifeSpanHandler();
         Browser.MenuHandler = new ContextMenuHandler();
-        Browser.Address = "https://bing.com/";
+        Browser.Address = settings.Value.LaunchOptions.Address;
 
+        Browser.FrameLoadEnd += OnFrameLoadEnd;
         Browser.LoadingStateChanged += OnLoadingStateChanged;
-        Browser.JavascriptObjectRepository.ResolveObject += OnResolveObject;
-        Browser.JavascriptObjectRepository.ObjectsBoundInJavascript += OnObjectsBoundInJavascript;
 
         Browser.JavascriptMessageReceived += OnJavascriptMessageReceived;
     }
 
-    private void OnLoadingStateChanged(object? sender, LoadingStateChangedEventArgs eventArgs)
+    private void OnFrameLoadEnd(object? sender, FrameLoadEndEventArgs eventArgs)
     {
-        Application.Current.Dispatcher.Invoke(() => OnLoadingStateChanged(eventArgs));
+        if (!eventArgs.Frame.IsMain)
+        {
+            return;
+        }
+
+        Browser.ExecuteScriptAsync("window.dispatchEvent(new CustomEvent('platformReady', { detail: { platform: 'windows' } }));");
     }
 
-    private async void OnLoadingStateChanged(LoadingStateChangedEventArgs eventArgs)
+    private void OnLoadingStateChanged(object? sender, LoadingStateChangedEventArgs eventArgs)
+    {
+        _ = OnLoadingStateChanged(eventArgs);
+    }
+
+    private async Task OnLoadingStateChanged(LoadingStateChangedEventArgs eventArgs)
     {
         if (!eventArgs.IsLoading)
         {
             Browser.LoadingStateChanged -= OnLoadingStateChanged;
-
-            Log.Information("WebWindow Browser Loaded");
 
             while (!Browser.CanExecuteJavascriptInMainFrame)
             {
                 await Task.Delay(10);
             }
 
-            Log.Information("WebWindow Browser Ready To Execute Javascript");
-        }
-    }
+            Topmost = true;
 
-    private void OnResolveObject(object? sender, JavascriptBindingEventArgs eventArgs)
-    {
-        // JavascriptBindingComponent.Default.Resolve(eventArgs.ObjectRepository, eventArgs.ObjectName);
-    }
-
-    private void OnObjectsBoundInJavascript(object? sender, JavascriptBindingMultipleCompleteEventArgs e)
-    {
-        foreach (var objectName in e.ObjectNames)
-        {
-            Log.Debug("绑定成功:{ObjectName}", objectName);
+            if (settings.Value.LaunchOptions.ShowDevTools)
+            {
+                Browser.ShowDevTools();
+            }
         }
     }
 
     private void OnJavascriptMessageReceived(object? sender, JavascriptMessageReceivedEventArgs eventArgs)
     {
-        // if (JavascriptMessageComponent.Default == null)
-        // {
-        //     Logger.LogWarning($"JavascriptMessageComponent is null");
-        //     return;
-        // }
-        //
-        // try
-        // {
-        //     var info = eventArgs.ConvertMessageTo<JavascriptMessageInfo>();
-        //
-        //     Dispatcher.Invoke(() => JavascriptMessageComponent.Default.Handle(Browser, info));
-        // }
-        // catch (Exception exception)
-        // {
-        //     Logger.LogError($"javascriptmessage received but can't handle,{exception}");
-        // }
+        if (eventArgs.Message is not string message)
+        {
+            Log.Warning("CefSharp Web Message Type {type} UnSupport.", eventArgs.Message.GetType());
+            return;
+        }
+
+        session.Send(message);
     }
 }

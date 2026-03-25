@@ -1,0 +1,5 @@
+GetClassName
+GetWindowRect
+IsIconic
+IsZoomed
+SetWindowPos

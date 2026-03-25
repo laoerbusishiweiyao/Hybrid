@@ -8,8 +8,7 @@
         mc:Ignorable="d"
         Title="WebWindow"
         AllowsTransparency="True" Background="Transparent"
-        WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen" ShowInTaskbar="True">
+        WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False">
     <DockPanel>
         <wpf:ChromiumWebBrowser x:Name="Browser" />
     </DockPanel>
