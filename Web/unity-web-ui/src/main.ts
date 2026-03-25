@@ -3,8 +3,7 @@ import './style.css'
 import App from './App.vue'
 import { RouterContext } from '@runtime/RouterContext'
 import '@runtime/InputSystem'
-import { UnityBridge } from '@runtime/UnityBridge'
-import { Opcode } from '@runtime/Opcode'
+import '@runtime/Session/UnitySession'
 
 window.addEventListener('DOMContentLoaded', OnDOMContentLoaded);
 window.addEventListener('load', OnWindowLoad);
@@ -18,5 +17,4 @@ function OnDOMContentLoaded(): void {
 }
 
 function OnWindowLoad(): void {
-    UnityBridge.post(Opcode.WebLoaded, {})
 };

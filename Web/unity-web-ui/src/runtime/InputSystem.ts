@@ -1,53 +1,5 @@
-import { Opcode } from "./Opcode";
-import { UnityBridge } from "./UnityBridge";
-
-export const TouchPhase = {
-    None: 0,
-    Began: 1,
-    Moved: 2,
-    Ended: 3,
-    Canceled: 4,
-    Stationary: 5,
-} as const;
-
-export type TouchPhase = typeof TouchPhase[keyof typeof TouchPhase];
-
-export interface WebTouchData {
-    readonly id: number;
-    readonly phase: TouchPhase;
-    readonly x: number;
-    readonly y: number;
-}
-
-export class WebPointerData {
-    id: number;
-    phase: TouchPhase;
-    positionX: number;
-    positionY: number;
-    type: string;
-
-    constructor(id: number, positionX: number, positionY: number, phase: TouchPhase, type: string) {
-        this.id = id;
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.phase = phase;
-        this.type = type;
-    }
-}
-
-export class WebMouseData {
-    id: number;
-    phase: TouchPhase;
-    positionX: number;
-    positionY: number;
-
-    constructor(id: number, positionX: number, positionY: number, phase: TouchPhase) {
-        this.id = id;
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.phase = phase;
-    }
-}
+import { UnitySession } from "./Session/UnitySession";
+import { WebTouchData, WebMouseData, TouchPhase } from "./Session/Message";
 
 class InputSystemType {
     private readonly devicePixelRatio: number;
@@ -56,6 +8,8 @@ class InputSystemType {
         this.devicePixelRatio = window.devicePixelRatio || 1;
 
         this.addTouchEventListener();
+
+        this.addPointerEventListener();
     }
 
     private addTouchEventListener() {
@@ -70,6 +24,8 @@ class InputSystemType {
 
         document.removeEventListener('touchcancel', this.onTouchCancel);
         document.addEventListener('touchcancel', this.onTouchCancel);
+
+        console.log('Touch event listeners added.');
     }
 
     private onTouchStart = (event: TouchEvent) => {
@@ -96,15 +52,61 @@ class InputSystemType {
         }
     }
 
-    private processTouchEvent(touch: Touch, phase: TouchPhase, _: TouchEvent): void {
+    private processTouchEvent(touch: Touch, phase: typeof TouchPhase[keyof typeof TouchPhase], _: TouchEvent): void {
         const { identifier, clientX, clientY } = touch;
-
         if (this.isWebUIElement(clientX, clientY)) {
             return;
         }
 
         const { x, y } = this.convertToUnityCoordinates(clientX, clientY);
-        UnityBridge.post(Opcode.WebTouchData, { id: identifier, phase, x, y });
+        UnitySession.send(new WebTouchData(identifier, phase, x, y));
+    }
+
+    private addPointerEventListener() {
+        document.removeEventListener('mousedown', this.onMouseDown);
+        document.addEventListener('mousedown', this.onMouseDown);
+
+        document.removeEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('mousemove', this.onMouseMove);
+
+        document.removeEventListener('mouseup', this.onMouseUp);
+        document.addEventListener('mouseup', this.onMouseUp);
+
+        document.removeEventListener('wheel', this.onMouseWheel);
+        document.addEventListener('wheel', this.onMouseWheel);
+
+        console.log('Mouse event listeners added.');
+    }
+
+    private onMouseDown = (event: MouseEvent) => {
+        this.processMouseEvent(event);
+    }
+
+    private onMouseMove = (event: MouseEvent) => {
+        this.processMouseEvent(event);
+    }
+
+    private onMouseUp = (event: MouseEvent) => {
+        this.processMouseEvent(event);
+    }
+
+    private onMouseWheel = (event: WheelEvent) => {
+        this.processMouseEvent(event);
+    }
+
+    private processMouseEvent(event: MouseEvent): void {
+        const { buttons, clientX, clientY } = event;
+        if (this.isWebUIElement(clientX, clientY)) {
+            return;
+        }
+
+        const { x, y } = this.convertToUnityCoordinates(clientX, clientY);
+
+        if (event instanceof WheelEvent) {
+            UnitySession.send(new WebMouseData(buttons, x, y, event.deltaX, event.deltaY));
+        } else {
+            UnitySession.send(new WebMouseData(buttons, x, y));
+        }
     }
 
     private isWebUIElement(clientX: number, clientY: number): boolean {

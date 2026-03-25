@@ -1,10 +1,18 @@
-declare interface UnityBridge {
-    send(message: string): void;
-    debug(message: string): void;
-    information(message: string): void;
+declare interface CefSharp {
+    bindObjectAsync(objectName: string): Promise<{ Count: number, Success: boolean, Message: string }>;
+    postMessage(message: string): void;
+}
+
+declare interface WebView {
+    postMessage(message: string): void;
 }
 
 declare interface Window {
-    bridge: UnityBridge;
+    platform: 'windows' | 'android' | 'ios' | 'macos' | 'linux';
+
+    bridge: NativeBridge;
     receive(message: string): void;
+
+    cefSharp: CefSharp;
+    webView: WebView;
 }
