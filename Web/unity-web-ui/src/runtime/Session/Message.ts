@@ -1,4 +1,4 @@
-import { MessageObject } from "./IMessage";
+import { MessageObject, RequestObject, ResponseObject, type IWebRequest, type IWebResponse } from "./IMessage";
 
 export const TouchPhase = {
     None: 0,
@@ -41,4 +41,25 @@ export class WebMouseData extends MessageObject {
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }
+}
+
+export class WebLoaded extends MessageObject {
+}
+
+export class UnityInformationRequest extends RequestObject implements IWebRequest {
+}
+
+export class UnityInformationResponse extends ResponseObject implements IWebResponse {
+    version!: string;
+    unityVersion!: string;
+}
+
+export class UnityInitialized extends MessageObject {
+}
+
+export class BrowserInformationRequest extends RequestObject implements IWebRequest {
+}
+
+export class BrowserInformationResponse extends ResponseObject implements IWebResponse {
+    userAgent!: string;
 }

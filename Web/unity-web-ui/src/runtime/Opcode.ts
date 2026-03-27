@@ -4,6 +4,13 @@ export const Opcode = {
     WebTouchData: 10202,
     WebPointerData: 10203,
     WebMouseData: 10204,
+
+    UnityInformationRequest: 10301,
+    UnityInformationResponse: 10302,
+
+    UnityInitialized: 10401,
+    BrowserInformationRequest: 10402,
+    BrowserInformationResponse: 10403,
 } as const;
 
 export type TouchPhase = typeof Opcode[keyof typeof Opcode];

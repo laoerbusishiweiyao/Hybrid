@@ -1,64 +1,48 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using TMPro;
 using UnityEngine;
 
 namespace Chaos
 {
-    [DisallowMultipleComponent]
-    public sealed class WebMessageDispatcher : MonoBehaviour
+    public sealed class WebMessageDispatcher : IDisposable
     {
-        public int MessagePerSecond { get; private set; }
-        private readonly Queue<float> messageTimestamps = new();
+        public static readonly WebMessageDispatcher Default = new();
 
-        // DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() = System.currentTimeMillis()
-        public void OnWebMessage(string message)
+        private readonly Dictionary<ushort, List<IWebMessageHandler>> allHandler = new();
+
+        public WebMessageDispatcher()
         {
-            messageTimestamps.Enqueue(Time.time);
-            var start = Time.time - 1f;
-            while (messageTimestamps.Count > 0 && messageTimestamps.Peek() < start)
+            allHandler[Opcode.WebLoaded] = new List<IWebMessageHandler> { new WebLoadedHandler() };
+
+            allHandler[Opcode.WebTouchData] = new List<IWebMessageHandler> { new WebTouchDataHandler() };
+            allHandler[Opcode.WebMouseData] = new List<IWebMessageHandler> { new WebMouseDataHandler() };
+
+            allHandler[Opcode.UnityInformationRequest] = new List<IWebMessageHandler> { new UnityInformationRequestHandler() };
+        }
+
+        public void Handle(ushort opcode, object message)
+        {
+            if (!allHandler.TryGetValue(opcode, out var handlers))
             {
-                messageTimestamps.Dequeue();
+                Debug.Log($"消息 {opcode} 无处理器");
+                return;
             }
-
-            MessagePerSecond = messageTimestamps.Count;
-
-            try
+            
+            foreach (var handler in handlers)
             {
-                var info = JsonSerializer.Deserialize<WebMessageInfo>(message, AppSettings.JsonSerializerOptions);
-
-                switch (info.Opcode)
+                try
                 {
-                    case Opcode.WebLoaded:
-                    {
-                        GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = WebLoaded" + Environment.NewLine;
-                        break;
-                    }
-                    case Opcode.WebTouchData when info.Payload is JsonElement jsonElement && jsonElement.Deserialize<WebTouchData>(AppSettings.JsonSerializerOptions) is { } webTouchData:
-                    {
-                        GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = {info.Payload}" + Environment.NewLine;
-
-                        WebInputAdapter.Process(webTouchData);
-                        break;
-                    }
-                    case Opcode.AndroidLogEntry when info.Payload is JsonElement jsonElement && jsonElement.Deserialize<AndroidLogEntry>(AppSettings.JsonSerializerOptions) is { } androidLogEntry:
-                    {
-                        GameObject.Find("/Canvas/WebMessage").GetComponent<TextMeshProUGUI>().text += $"{info.Opcode} = {info.Payload}" + Environment.NewLine;
-                        break;
-                    }
+                    handler.Handle(message);
                 }
-            }
-            catch (Exception exception)
-            {
-                Debug.LogError($"反序列化失败: {exception.Message}\n{message}");
+                catch (Exception exception)
+                {
+                    Debug.LogError(exception);
+                }
             }
         }
 
-        private void Update()
+        public void Dispose()
         {
-            GameObject.Find("/Canvas/WebMessageFps").GetComponent<TextMeshProUGUI>().text =
-                $"WebMessage: {MessagePerSecond} / s";
         }
     }
 }

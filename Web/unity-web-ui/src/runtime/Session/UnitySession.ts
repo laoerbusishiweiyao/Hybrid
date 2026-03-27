@@ -1,14 +1,11 @@
 import { RequestObject, type MessageObject, ResponseObject, type MessageType, type RequestType } from "./IMessage";
-import { OpcodeContext } from "./OpcodeContext";
+import { WebLoaded } from "./Message";
+import { OpcodeRegistry } from "./OpcodeRegistry";
 import { StatusCode } from "./StatusCode";
+import { UnityMessageDispatcher } from "./UnityMessageDispatcher";
 
 interface PlatformReadyEventDetail {
     platform: 'windows' | 'android' | 'ios' | 'macos' | 'linux';
-}
-
-interface MessageInfo {
-    opcode: number;
-    payload: MessageObject;
 }
 
 type RequestCallback = (value: ResponseObject) => void;
@@ -36,7 +33,7 @@ class UnitySessionType {
                 this.transmit = window.cefSharp.postMessage;
                 break;
             case 'android':
-                this.transmit = window.webView.postMessage;
+                this.transmit = window.webView.postMessage.bind(window.webView);
                 break;
             default:
                 console.error(`Unknown platform: ${platform}`);
@@ -44,31 +41,32 @@ class UnitySessionType {
         }
 
         console.log(`Platform is ready: ${platform}`);
+        this.send(new WebLoaded());
     }
 
     send(message: MessageObject): void {
         const type = message.constructor as MessageType;
-        const opcode = OpcodeContext.findOpcode(type);
+        const opcode = OpcodeRegistry.findOpcode(type);
 
         if (opcode === undefined) {
             // 处理错误：发送了一个未注册的消息类型
             console.error(`Unknown message type: ${type.name}`);
             return;
         }
-
+        
         this.transmit?.(JSON.stringify({ opcode, payload: message }));
     }
 
     sendAsync<TResponse extends ResponseObject>(message: RequestObject): Promise<TResponse> {
         const type = message.constructor as RequestType;
-        const opcode = OpcodeContext.findOpcode(type);
+        const opcode = OpcodeRegistry.findOpcode(type);
 
         if (opcode === undefined) {
             console.error(`Unknown message type: ${type.name}`);
             throw new Error(`Unknown message type: ${type.name}`);
         }
 
-        message.requestId = this.requestIdCounter++;
+        message.requestId = ++this.requestIdCounter;
 
         return new Promise<TResponse>(resolve => {
             // 注册回调
@@ -87,15 +85,15 @@ class UnitySessionType {
         });
     }
 
-    private receive = (content: string) => {
-        const info: MessageInfo = JSON.parse(content);
-        const type = OpcodeContext.findType(info.opcode);
+    private receive = (opcode: number, content: string) => {
+        const type = OpcodeRegistry.findType(opcode);
         if (type === undefined) {
-            console.error(`Unknown message type: ${info.opcode}`);
+            console.error(`Unknown message type: ${opcode}`);
             return;
         }
 
-        const message = Object.assign(Object.create(type.prototype), info.payload) as MessageObject;
+        const message = Object.assign(new type(), content) as MessageObject;
+
         // 响应
         if (message instanceof ResponseObject) {
             const callback = this.callbacks.get(message.requestId);
@@ -107,10 +105,12 @@ class UnitySessionType {
         // 请求
         else if (message instanceof RequestObject) {
             // 分发处理请求
+            UnityMessageDispatcher.handle(opcode, message);
         }
         // 消息
         else {
             // 分发处理消息
+            UnityMessageDispatcher.handle(opcode, message);
         }
     }
 }

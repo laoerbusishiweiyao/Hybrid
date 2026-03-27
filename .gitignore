@@ -54,3 +54,13 @@ Web/unity-web-ui/*.ntvs*
 Web/unity-web-ui/*.njsproj
 Web/unity-web-ui/*.sln
 Web/unity-web-ui/*.sw?
+
+# Server
+
+Server/**/.idea/
+Server/**/bin/
+Server/**/obj/
+
+# Release
+Release/
+Debug/

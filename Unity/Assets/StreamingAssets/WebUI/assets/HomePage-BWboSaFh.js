@@ -1,0 +1,1 @@
+import{a as e,c as t,i as n,n as r,o as i,r as a,s as o,t as s}from"./index-xXrVZ8bi.js";var c=e({__name:`HomePage`,setup(e){function c(){s.messages.push(`Hello from HomePage!`)}return(e,l)=>(i(),n(r,null,[a(`button`,{"data-web-ui":``,onClick:c},[...l[0]||=[a(`span`,null,`点击测试`,-1)]]),a(`div`,null,t(o(s).messages),1)],64))}});export{c as default};

@@ -1,1 +1,0 @@
-import{a as e,c as t,i as n,n as r,o as i,r as a,s as o,t as s}from"./index-DG5vpawB.js";const c=i(new class{messages=[]});var l=n({__name:`HomePage`,setup(n){return(n,i)=>(e(),a(s,null,[i[0]||=r(`button`,{"data-web-ui":``},[r(`span`,null,`点击测试`)],-1),r(`div`,null,t(o(c).messages),1)],64))}});export{l as default};

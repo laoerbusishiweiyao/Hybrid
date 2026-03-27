@@ -14,9 +14,9 @@ open class StandaloneWebViewClient(private val context: Context) : WebViewClient
     override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
         val url = request?.url ?: return super.shouldInterceptRequest(view, request)
 
-        if (url.host == NativeBridgeSettings.webViewOptions.localAssetDomain) {
+        if (url.host == WebViewSettings.domain) {
             val path = url.path?.takeIf { it.isNotEmpty() } ?: "/"
-            return loadFromPersistentDataPath(path, NativeBridgeSettings.webViewOptions.assetFolderName)
+            return loadFromPersistentDataPath(path, WebViewSettings.contentPath)
         }
 
         return super.shouldInterceptRequest(view, request)

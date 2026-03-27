@@ -11,7 +11,7 @@ declare interface Window {
     platform: 'windows' | 'android' | 'ios' | 'macos' | 'linux';
 
     bridge: NativeBridge;
-    receive(message: string): void;
+    receive(opcode: number, content: string): void;
 
     cefSharp: CefSharp;
     webView: WebView;

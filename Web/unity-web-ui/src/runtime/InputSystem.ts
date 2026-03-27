@@ -1,5 +1,5 @@
 import { UnitySession } from "./Session/UnitySession";
-import { WebTouchData, WebMouseData, TouchPhase } from "./Session/Message";
+import { WebTouchData, TouchPhase } from "./Session/Message";
 
 class InputSystemType {
     private readonly devicePixelRatio: number;
@@ -9,7 +9,7 @@ class InputSystemType {
 
         this.addTouchEventListener();
 
-        this.addPointerEventListener();
+        // this.addPointerEventListener();
     }
 
     private addTouchEventListener() {
@@ -62,52 +62,52 @@ class InputSystemType {
         UnitySession.send(new WebTouchData(identifier, phase, x, y));
     }
 
-    private addPointerEventListener() {
-        document.removeEventListener('mousedown', this.onMouseDown);
-        document.addEventListener('mousedown', this.onMouseDown);
+    // private addPointerEventListener() {
+    //     document.removeEventListener('mousedown', this.onMouseDown);
+    //     document.addEventListener('mousedown', this.onMouseDown);
 
-        document.removeEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mousemove', this.onMouseMove);
+    //     document.removeEventListener('mousemove', this.onMouseMove);
+    //     document.addEventListener('mousemove', this.onMouseMove);
 
-        document.removeEventListener('mouseup', this.onMouseUp);
-        document.addEventListener('mouseup', this.onMouseUp);
+    //     document.removeEventListener('mouseup', this.onMouseUp);
+    //     document.addEventListener('mouseup', this.onMouseUp);
 
-        document.removeEventListener('wheel', this.onMouseWheel);
-        document.addEventListener('wheel', this.onMouseWheel);
+    //     document.removeEventListener('wheel', this.onMouseWheel);
+    //     document.addEventListener('wheel', this.onMouseWheel);
 
-        console.log('Mouse event listeners added.');
-    }
+    //     console.log('Mouse event listeners added.');
+    // }
 
-    private onMouseDown = (event: MouseEvent) => {
-        this.processMouseEvent(event);
-    }
+    // private onMouseDown = (event: MouseEvent) => {
+    //     this.processMouseEvent(event);
+    // }
 
-    private onMouseMove = (event: MouseEvent) => {
-        this.processMouseEvent(event);
-    }
+    // private onMouseMove = (event: MouseEvent) => {
+    //     this.processMouseEvent(event);
+    // }
 
-    private onMouseUp = (event: MouseEvent) => {
-        this.processMouseEvent(event);
-    }
+    // private onMouseUp = (event: MouseEvent) => {
+    //     this.processMouseEvent(event);
+    // }
 
-    private onMouseWheel = (event: WheelEvent) => {
-        this.processMouseEvent(event);
-    }
+    // private onMouseWheel = (event: WheelEvent) => {
+    //     this.processMouseEvent(event);
+    // }
 
-    private processMouseEvent(event: MouseEvent): void {
-        const { buttons, clientX, clientY } = event;
-        if (this.isWebUIElement(clientX, clientY)) {
-            return;
-        }
+    // private processMouseEvent(event: MouseEvent): void {
+    //     const { buttons, clientX, clientY } = event;
+    //     if (this.isWebUIElement(clientX, clientY)) {
+    //         return;
+    //     }
 
-        const { x, y } = this.convertToUnityCoordinates(clientX, clientY);
+    //     const { x, y } = this.convertToUnityCoordinates(clientX, clientY);
 
-        if (event instanceof WheelEvent) {
-            UnitySession.send(new WebMouseData(buttons, x, y, event.deltaX, event.deltaY));
-        } else {
-            UnitySession.send(new WebMouseData(buttons, x, y));
-        }
-    }
+    //     if (event instanceof WheelEvent) {
+    //         UnitySession.send(new WebMouseData(buttons, x, y, event.deltaX, event.deltaY));
+    //     } else {
+    //         UnitySession.send(new WebMouseData(buttons, x, y));
+    //     }
+    // }
 
     private isWebUIElement(clientX: number, clientY: number): boolean {
         let element = document.elementFromPoint(clientX, clientY);

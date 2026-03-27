@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
+    <!-- 方案 A：允许指定域名 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">chaos.com</domain>
+        <domain includeSubdomains="true">api.chaos.com</domain>
+    </domain-config>
+
+    <!-- 方案 B：允许指定 IP -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.10.31</domain>
+    </domain-config>
+
+    <!-- 方案 C：允许所有 -->
+    <base-config
+        cleartextTrafficPermitted="true"
+        tools:ignore="InsecureBaseConfiguration">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

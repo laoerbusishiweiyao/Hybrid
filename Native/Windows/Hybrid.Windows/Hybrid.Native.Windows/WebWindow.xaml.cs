@@ -20,6 +20,14 @@ public partial class WebWindow : Window
 
         InitializeComponent();
         Loaded += OnLoaded;
+
+        session.MessageReceived += OnMessageReceived;
+    }
+
+    private void OnMessageReceived(object? sender, NamedPipeMessageEventArgs eventArgs)
+    {
+        Log.Debug("receive {opcode} = {content}", eventArgs.Opcode, eventArgs.Payload);
+        Browser.EvaluateScriptAsync($"window.receive({eventArgs.Opcode}, {eventArgs.Payload})");
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)

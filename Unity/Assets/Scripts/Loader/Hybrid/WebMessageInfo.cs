@@ -1,8 +1,8 @@
 namespace Chaos
 {
-    public sealed class WebMessageInfo
+    public sealed record WebMessageInfo
     {
-        public int Opcode;
+        public ushort Opcode;
         public object Payload;
     }
 }

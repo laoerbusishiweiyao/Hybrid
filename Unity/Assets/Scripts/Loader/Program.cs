@@ -1,7 +1,5 @@
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
+using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Chaos
@@ -11,32 +9,35 @@ namespace Chaos
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void BeforeSceneLoad()
         {
-            var gameObject = new GameObject(nameof(Program), typeof(Program), typeof(WebMessageDispatcher));
+            var gameObject = new GameObject(nameof(Program), typeof(Program));
             DontDestroyOnLoad(gameObject);
         }
 
+        private SynchronizationContext unitySynchronizationContext;
+
         private void Awake()
         {
-#if UNITY_EDITOR
-            var files = Directory.EnumerateFiles(Application.streamingAssetsPath, "*.*", SearchOption.AllDirectories)
-                .Where(file => Path.GetExtension(file) != ".meta")
-                .Select(file => Path.GetRelativePath(Application.streamingAssetsPath, file).Replace('\\', '/'))
-                .ToList();
-            File.WriteAllText("Assets/Resources/WebUIManifest.json", JsonSerializer.Serialize(files));
-#else
-            _ = InitializeAsync();
-#endif
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) => Debug.LogError(args.ExceptionObject);
+
+            unitySynchronizationContext = SynchronizationContext.Current;
+            SynchronizationContext.SetSynchronizationContext(ThreadSynchronizationContext.Default);
+
+            _ = WebContext.InitializeAsync("http://192.168.10.31:12345/");
         }
 
-        private async Task InitializeAsync()
+        private void Update()
         {
-            await WebBridge.CopyStreamingAssetsToPersistentAsync();
-            WebBridge.Load(new AndroidWebViewOptions());
+            ThreadSynchronizationContext.Default.Update();
         }
 
         private void OnApplicationQuit()
         {
-            WebBridge.Unload();
+            WebMessageDispatcher.Default.Dispose();
+            NamedPipeSession.Default.Dispose();
+            WebContext.Shutdown();
+
+            SynchronizationContext.SetSynchronizationContext(unitySynchronizationContext);
+            unitySynchronizationContext = null;
         }
     }
 }

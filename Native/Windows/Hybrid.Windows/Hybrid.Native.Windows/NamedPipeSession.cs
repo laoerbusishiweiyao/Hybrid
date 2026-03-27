@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Channels;
+using CefSharp;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -13,12 +14,20 @@ using PipeOptions = System.IO.Pipes.PipeOptions;
 
 namespace Hybrid.Native.Windows;
 
+public sealed class NamedPipeMessageEventArgs(ushort opcode, string payload) : EventArgs
+{
+    public readonly ushort Opcode = opcode;
+    public readonly string Payload = payload;
+}
+
 public sealed class NamedPipeSession(IOptions<AppSettings> settings) : BackgroundService
 {
     public required NamedPipeServerStream NamedPipe { get; set; }
 
     public required Pipe ReceiverPipe;
     public required Pipe SenderPipe;
+
+    public event EventHandler<NamedPipeMessageEventArgs>? MessageReceived;
 
     private readonly Channel<string> cache = Channel.CreateUnbounded<string>();
 
@@ -74,7 +83,7 @@ public sealed class NamedPipeSession(IOptions<AppSettings> settings) : Backgroun
         await base.StopAsync(cancellationToken);
     }
 
-    public async Task SendAsync(ushort opcode, JsonElement content, CancellationToken cancellationToken)
+    private async Task SendAsync(ushort opcode, JsonElement content, CancellationToken cancellationToken)
     {
         var writer = SenderPipe.Writer;
 
@@ -207,7 +216,8 @@ public sealed class NamedPipeSession(IOptions<AppSettings> settings) : Backgroun
 
     private void Process(ushort opcode, ReadOnlySequence<byte> payload)
     {
-        Log.Information("Processing {opcode} payload {payload.Length} bytes", opcode, payload.Length);
+        var content = Encoding.UTF8.GetString(payload.IsSingleSegment ? payload.FirstSpan : payload.ToArray());
+        MessageReceived?.Invoke(this, new NamedPipeMessageEventArgs(opcode, content));
     }
 
     private bool TryParse(ref ReadOnlySequence<byte> buffer, out ushort opcode, out ReadOnlySequence<byte> payload)
