@@ -3,7 +3,8 @@
     "rootNamespace": "Chaos",
     "references": [
         "Unity.TextMeshPro",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.Foundation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

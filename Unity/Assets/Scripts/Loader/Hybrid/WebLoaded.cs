@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Chaos
 {
-    public sealed record WebLoaded : MessageObject, IWebMessage
+    public sealed class WebLoaded : MessageObject, IWebMessage
     {
     }
 

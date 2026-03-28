@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Chaos
 {
-    public sealed record UnityInformationRequest : MessageObject, IWebRequest
+    public sealed class UnityInformationRequest : MessageObject, IWebRequest
     {
         public int RequestId { get; set; }
     }
 
-    public sealed record UnityInformationResponse : MessageObject, IWebResponse
+    public sealed class UnityInformationResponse : MessageObject, IWebResponse
     {
         public int RequestId { get; set; }
         public int StatusCode { get; set; }

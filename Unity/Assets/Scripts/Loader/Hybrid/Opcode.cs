@@ -24,16 +24,16 @@ namespace Chaos
         public const ushort BrowserInformationResponse = 10403;
     }
 
-    public sealed record UnityInitialized : MessageObject, IWebMessage
+    public sealed class UnityInitialized : MessageObject, IWebMessage
     {
     }
 
-    public sealed record BrowserInformationRequest : MessageObject, IWebRequest
+    public sealed class BrowserInformationRequest : MessageObject, IWebRequest
     {
         public int RequestId { get; set; }
     }
 
-    public sealed record BrowserInformationResponse : MessageObject, IWebResponse
+    public sealed class BrowserInformationResponse : MessageObject, IWebResponse
     {
         public int RequestId { get; set; }
         public int StatusCode { get; set; }

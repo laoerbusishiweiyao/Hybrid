@@ -1,6 +1,6 @@
 namespace Chaos
 {
-    public sealed record WebMouseData : MessageObject
+    public sealed class WebMouseData : MessageObject
     {
         public readonly ushort Buttons;
         public readonly float X;

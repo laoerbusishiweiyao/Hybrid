@@ -2,7 +2,7 @@ using UnityEngine.InputSystem;
 
 namespace Chaos
 {
-    public sealed record WebTouchData : MessageObject, IWebMessage
+    public sealed class WebTouchData : MessageObject, IWebMessage
     {
         public readonly int Id;
         public readonly TouchPhase Phase;
