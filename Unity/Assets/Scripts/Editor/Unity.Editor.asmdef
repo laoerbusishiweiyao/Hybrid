@@ -11,7 +11,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "System.Text.Json.dll"
+        "System.Text.Json.dll",
+        "Serilog.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

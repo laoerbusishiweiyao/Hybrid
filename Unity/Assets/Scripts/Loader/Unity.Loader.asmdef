@@ -14,7 +14,8 @@
         "System.Text.Json.dll",
         "System.IO.Pipelines.dll",
         "MemoryPack.Core.dll",
-        "System.Threading.Channels.dll"
+        "System.Threading.Channels.dll",
+        "Serilog.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
