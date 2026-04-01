@@ -3,14 +3,13 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
-using Serilog;
 
 namespace Chaos
 {
     [AsyncMethodBuilder(typeof(ThreadTaskAsyncMethodBuilder))]
-    public sealed class ThreadTask : ICriticalNotifyCompletion, IThreadTask
+    public sealed partial class ThreadTask : ICriticalNotifyCompletion, IThreadTask
     {
-        public static readonly Action<Exception> ExceptionHandler = exception => Log.Error("{exception}", exception);
+        public static Action<Exception> ExceptionHandler;
 
         private static ThreadTask completedTask;
 
@@ -103,7 +102,8 @@ namespace Chaos
 
         public bool IsCompleted
         {
-            [DebuggerHidden] get => state != AwaiterStatus.Pending;
+            [DebuggerHidden]
+            get => state != AwaiterStatus.Pending;
         }
 
         [DebuggerHidden]
@@ -285,7 +285,8 @@ namespace Chaos
 
         public bool IsCompleted
         {
-            [DebuggerHidden] get => state != AwaiterStatus.Pending;
+            [DebuggerHidden]
+            get => state != AwaiterStatus.Pending;
         }
 
         [DebuggerHidden]

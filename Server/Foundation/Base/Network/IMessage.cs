@@ -1,8 +1,6 @@
-namespace Chaos;
+﻿namespace Chaos;
 
-public interface IMessage
-{
-}
+public interface IMessage;
 
 public interface IRequest : IMessage
 {

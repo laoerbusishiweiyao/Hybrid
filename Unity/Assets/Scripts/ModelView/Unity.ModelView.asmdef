@@ -1,0 +1,19 @@
+{
+    "name": "Unity.ModelView",
+    "rootNamespace": "Chaos",
+    "references": [
+        "Unity.Foundation",
+        "Unity.Model"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_COMPILE || UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

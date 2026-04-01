@@ -7,6 +7,12 @@ Unity/Logs/
 Unity/obj/
 Unity/Temp/
 Unity/*.csproj
+Unity/HybridCLRData/
+Unity/Bundles/
+
+Unity/Assets/Bundles/DefaultPackage/Code/
+Unity/Assets/Bundles/DefaultPackage/AotDlls/
+Unity/Assets/StreamingAssets/
 
 # Native Android
 

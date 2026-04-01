@@ -7,9 +7,9 @@ using Serilog;
 namespace Chaos;
 
 [AsyncMethodBuilder(typeof(ThreadTaskAsyncMethodBuilder))]
-public sealed class ThreadTask : ICriticalNotifyCompletion, IThreadTask
+public sealed partial class ThreadTask : ICriticalNotifyCompletion, IThreadTask
 {
-    public static readonly Action<Exception> ExceptionHandler = exception => Log.Error("{exception}", exception);
+    public static Action<Exception> ExceptionHandler;
 
     private static ThreadTask completedTask;
 

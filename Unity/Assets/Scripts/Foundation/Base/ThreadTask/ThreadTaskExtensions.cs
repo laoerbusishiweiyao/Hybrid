@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Chaos
 {
     internal static class ThreadTaskExtensions
@@ -28,6 +30,140 @@ namespace Chaos
                     break;
                 }
             }
+        }
+    }
+
+    public sealed partial class ThreadTask
+    {
+        public static async ThreadTask<T> GetContextAsync<T>() where T : class
+        {
+            var task = ThreadTask<object>.Create(true);
+            task.ThreadTaskType = ThreadTaskType.ContextTask;
+            var result = await task;
+            return result as T;
+        }
+
+        public static async ThreadTask<object> GetContextAsync()
+        {
+            var task = ThreadTask<object>.Create(true);
+            task.ThreadTaskType = ThreadTaskType.ContextTask;
+            var result = await task;
+            return result;
+        }
+
+        private sealed class CoroutineBlocker
+        {
+            private int count;
+
+            private ThreadTask tcs;
+
+            public CoroutineBlocker(int count)
+            {
+                this.count = count;
+            }
+
+            public async ThreadTask RunSubCoroutineAsync(ThreadTask task)
+            {
+                try
+                {
+                    await task;
+                }
+                finally
+                {
+                    --count;
+
+                    if (count <= 0 && tcs != null)
+                    {
+                        var threadTask = tcs;
+                        tcs = null;
+                        threadTask.SetResult();
+                    }
+                }
+            }
+
+            public async ThreadTask WaitAsync()
+            {
+                if (count <= 0)
+                {
+                    return;
+                }
+
+                tcs = Create(true);
+                await tcs;
+            }
+        }
+
+        public static async ThreadTask WaitAnyAsync(List<ThreadTask> tasks)
+        {
+            if (tasks.Count == 0)
+            {
+                return;
+            }
+
+            var context = await GetContextAsync();
+
+            CoroutineBlocker coroutineBlocker = new(1);
+
+            foreach (var task in tasks)
+            {
+                coroutineBlocker.RunSubCoroutineAsync(task).Coroutine(context);
+            }
+
+            await coroutineBlocker.WaitAsync();
+        }
+
+        public static async ThreadTask WaitAnyAsync(ThreadTask[] tasks)
+        {
+            if (tasks.Length == 0)
+            {
+                return;
+            }
+
+            var context = await GetContextAsync();
+            CoroutineBlocker coroutineBlocker = new(1);
+
+            foreach (var task in tasks)
+            {
+                coroutineBlocker.RunSubCoroutineAsync(task).Coroutine(context);
+            }
+
+            await coroutineBlocker.WaitAsync();
+        }
+
+        public static async ThreadTask WaitAllAsync(ThreadTask[] tasks)
+        {
+            if (tasks.Length == 0)
+            {
+                return;
+            }
+
+            var context = await GetContextAsync();
+            CoroutineBlocker coroutineBlocker = new(tasks.Length);
+
+            foreach (var task in tasks)
+            {
+                coroutineBlocker.RunSubCoroutineAsync(task).Coroutine(context);
+            }
+
+            await coroutineBlocker.WaitAsync();
+        }
+
+        public static async ThreadTask WaitAllAsync(List<ThreadTask> tasks)
+        {
+            if (tasks.Count == 0)
+            {
+                return;
+            }
+
+            var context = await GetContextAsync();
+            CoroutineBlocker coroutineBlocker = new(tasks.Count);
+
+            foreach (var task in tasks)
+            {
+                coroutineBlocker.RunSubCoroutineAsync(task).Coroutine(context);
+            }
+
+            await coroutineBlocker.WaitAsync();
         }
     }
 }

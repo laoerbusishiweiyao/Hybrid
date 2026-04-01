@@ -1,0 +1,21 @@
+{
+    "name": "Unity.HotfixView",
+    "rootNamespace": "Chaos",
+    "references": [
+        "GUID:5a7862cfb4466c3439e344fe6d1ef19a",
+        "GUID:3a6ee8a9642eed044a7eb9c08e855d4d",
+        "GUID:d2e01c98303cb6947a8f433984be20c9",
+        "GUID:459ae0c1b5cae45458d3c3662cdf5e6f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_COMPILE || UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -25,7 +25,7 @@ namespace Chaos
         public Pipe ReceiverPipe;
         public Pipe SenderPipe;
 
-        private readonly Channel<WebMessageInfo> cache = Channel.CreateUnbounded<WebMessageInfo>();
+        private readonly Channel<WebMessageInfo> cache = System.Threading.Channels.Channel.CreateUnbounded<WebMessageInfo>();
 
         private readonly CancellationTokenSource cancellationTokenSource = new();
 

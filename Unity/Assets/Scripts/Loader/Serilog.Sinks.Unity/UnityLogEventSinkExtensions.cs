@@ -9,7 +9,7 @@ namespace Chaos
 {
     public static class UnityLogEventSinkExtensions
     {
-        private const string DefaultUnityDebugOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{Fiber}] {Message:lj}{NewLine}{Exception}";
+        private const string DefaultUnityDebugOutputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{Scene}] {Message:lj}{NewLine}{Exception}";
 
         public static LoggerConfiguration Unity(this LoggerSinkConfiguration loggerConfiguration,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,

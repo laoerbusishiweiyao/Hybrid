@@ -1,0 +1,20 @@
+{
+    "name": "Unity.Hotfix",
+    "rootNamespace": "Chaos",
+    "references": [
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:5a7862cfb4466c3439e344fe6d1ef19a",
+        "GUID:3a6ee8a9642eed044a7eb9c08e855d4d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_COMPILE || UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

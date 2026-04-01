@@ -1,0 +1,141 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using Serilog;
+
+namespace Chaos
+{
+    public sealed class TcpTransport : IKcpTransport
+    {
+        private readonly TcpService tService;
+
+        private readonly BiDictionary<long, EndPoint> idEndpoints = new();
+
+        private readonly Queue<(EndPoint, MemoryBuffer)> channelRecvDatas = new();
+
+        private readonly Dictionary<long, long> readWriteTime = new();
+
+        private readonly Queue<long> channelIds = new();
+
+        public TcpTransport(AddressFamily addressFamily)
+        {
+            this.tService = new TcpService(addressFamily, ServiceType.External);
+            this.tService.ErrorCallback = this.OnError;
+            this.tService.ReadCallback = this.OnRead;
+        }
+
+        public TcpTransport(IPEndPoint ipEndPoint)
+        {
+            this.tService = new TcpService(ipEndPoint, ServiceType.External);
+            this.tService.AcceptCallback = this.OnAccept;
+            this.tService.ErrorCallback = this.OnError;
+            this.tService.ReadCallback = this.OnRead;
+        }
+
+        private void OnAccept(long id, IPEndPoint ipEndPoint)
+        {
+            var channel = this.tService.Get(id);
+            long timeNow = TimeInfo.Default.ClientNow();
+            this.readWriteTime[id] = timeNow;
+            this.channelIds.Enqueue(id);
+            this.idEndpoints.Add(id, channel.RemoteAddress);
+        }
+
+        public void OnError(long id, int error)
+        {
+            Log.Warning($"IKcpTransport tcp error: {id} {error}");
+            this.tService.Remove(id, error);
+            this.idEndpoints.RemoveWithKey(id);
+            this.readWriteTime.Remove(id);
+        }
+
+        private void OnRead(long id, MemoryBuffer memoryBuffer)
+        {
+            long timeNow = TimeInfo.Default.ClientNow();
+            this.readWriteTime[id] = timeNow;
+            var channel = this.tService.Get(id);
+            channelRecvDatas.Enqueue((channel.RemoteAddress, memoryBuffer));
+        }
+
+        public void Send(byte[] bytes, int index, int length, EndPoint endPoint, ChannelType channelType)
+        {
+            long id = this.idEndpoints.GetKeyOrDefault(endPoint);
+            if (id == 0)
+            {
+                if (channelType != ChannelType.Connect)
+                {
+                    return;
+                }
+
+                id = this.tService.NewId();
+                this.tService.Create(id, (IPEndPoint)endPoint);
+                this.idEndpoints.Add(id, endPoint);
+                this.channelIds.Enqueue(id);
+            }
+
+            MemoryBuffer memoryBuffer = this.tService.Fetch();
+            memoryBuffer.Write(bytes, index, length);
+            memoryBuffer.Seek(0, SeekOrigin.Begin);
+            this.tService.Send(id, memoryBuffer);
+
+            long timeNow = TimeInfo.Default.ClientNow();
+            this.readWriteTime[id] = timeNow;
+        }
+
+        public int Recv(byte[] buffer, ref EndPoint endPoint)
+        {
+            return RecvNonAlloc(buffer, ref endPoint);
+        }
+
+        public IPEndPoint GetBindPoint()
+        {
+            return this.tService.GetBindPoint();
+        }
+
+        public int RecvNonAlloc(byte[] buffer, ref EndPoint endPoint)
+        {
+            (EndPoint e, MemoryBuffer memoryBuffer) = this.channelRecvDatas.Dequeue();
+            endPoint = e;
+            int count = memoryBuffer.Read(buffer);
+            this.tService.Recycle(memoryBuffer);
+            return count;
+        }
+
+        public int Available()
+        {
+            return this.channelRecvDatas.Count;
+        }
+
+        public void Update()
+        {
+            // 检查长时间不读写的TChannel, 超时断开, 一次update检查10个
+            long timeNow = TimeInfo.Default.ClientNow();
+            const int MaxCheckNum = 10;
+            int n = this.channelIds.Count < MaxCheckNum ? this.channelIds.Count : MaxCheckNum;
+            for (int i = 0; i < n; ++i)
+            {
+                long id = this.channelIds.Dequeue();
+                if (!this.readWriteTime.TryGetValue(id, out long rwTime))
+                {
+                    continue;
+                }
+
+                if (timeNow - rwTime > 30 * 1000)
+                {
+                    this.OnError(id, StatusCodes.KcpReadWriteTimeout);
+                    continue;
+                }
+
+                this.channelIds.Enqueue(id);
+            }
+
+            this.tService.Update();
+        }
+
+        public void Dispose()
+        {
+            this.tService?.Dispose();
+        }
+    }
+}

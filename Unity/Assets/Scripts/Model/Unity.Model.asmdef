@@ -1,0 +1,19 @@
+{
+    "name": "Unity.Model",
+    "rootNamespace": "Chaos",
+    "references": [
+        "Unity.Mathematics",
+        "Unity.Foundation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_COMPILE || UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

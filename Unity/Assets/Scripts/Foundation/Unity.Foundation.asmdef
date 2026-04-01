@@ -8,7 +8,9 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "MongoDB.Bson.dll",
-        "Serilog.dll"
+        "Serilog.dll",
+        "MemoryPack.Core.dll",
+        "System.Runtime.CompilerServices.Unsafe.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
