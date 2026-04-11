@@ -7,6 +7,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <NuGetAudit>false</NuGetAudit>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -33,6 +34,10 @@
     <ItemGroup>
         <PackageReference Include="CefSharp.Wpf.NETCore" Version="145.0.260"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.269">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
         <PackageReference Include="Serilog.Expressions" Version="5.0.0" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />

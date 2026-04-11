@@ -17,12 +17,15 @@ public sealed record AppSettings
 
 public sealed record LaunchOptions
 {
+    public const string DefaultFilePath = "LaunchOptions.json";
+
     public required int ProcessId { get; init; }
     public required double Left { get; init; }
     public required double Top { get; init; }
     public required double Width { get; init; }
     public required double Height { get; init; }
-    public required string NamedPipeName { get; init; }
+    public required string SessionName { get; init; }
+    public required MemoryMappedFileRole SessionRole { get; init; }
     public required string Address { get; init; }
     public required bool ShowDevTools { get; init; }
 }

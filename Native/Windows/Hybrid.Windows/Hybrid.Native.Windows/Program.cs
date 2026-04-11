@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using System.Text;
+using Windows.Win32;
 using CefSharp;
 using CefSharp.Wpf;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -18,19 +20,27 @@ public sealed class Program
         Directory.SetCurrentDirectory(AppContext.BaseDirectory);
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+        _ = PInvoke.timeBeginPeriod(1);
+
         InitializeCefSettings();
 
         try
         {
             var builder = Host.CreateApplicationBuilder(args);
 
+            if (File.Exists(LaunchOptions.DefaultFilePath))
+            {
+                builder.Configuration.AddJsonFile(LaunchOptions.DefaultFilePath);
+                File.Delete(LaunchOptions.DefaultFilePath);
+            }
+
             builder.Services.AddSerilog(configuration => configuration.ReadFrom.Configuration(builder.Configuration));
             builder.Services.Configure<AppSettings>(builder.Configuration);
             builder.Services.AddSingleton<App>();
             builder.Services.AddSingleton<WebWindow>();
-
-            builder.Services.AddSingleton<NamedPipeSession>();
-            builder.Services.AddHostedService(serviceProvider => serviceProvider.GetRequiredService<NamedPipeSession>());
+            
+            builder.Services.AddSingleton<MemoryMappedFileSession>();
+            builder.Services.AddHostedService(serviceProvider => serviceProvider.GetRequiredService<MemoryMappedFileSession>());
 
             var host = builder.Build();
 
@@ -72,21 +82,20 @@ public sealed class Program
 
     private static void InitializeCefSettings()
     {
-        var cachePath = new DirectoryInfo("Cache/CefSharp/").FullName;
+        var cachePath = Path.GetFullPath("Cache/CefSharp/");
 
         if (Directory.Exists(cachePath))
         {
             Directory.Delete(cachePath, true);
-            Log.Information("清理浏览器缓存");
         }
 
         #region CEF初始化
 
-        var settings = new CefSettings()
+        var settings = new CefSettings
         {
             Locale = "zh-CN",
             CachePath = cachePath,
-            LogSeverity = LogSeverity.Disable,
+            LogSeverity = LogSeverity.Error,
             LogFile = new FileInfo($"../Logs/HybridNativeWindow.CefSharp.{DateTime.Now}.log").FullName,
             // UserAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36",
         };

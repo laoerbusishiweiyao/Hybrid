@@ -1,5 +1,1 @@
-GetClassName
-GetWindowRect
-IsIconic
-IsZoomed
-SetWindowPos
+timeBeginPeriod

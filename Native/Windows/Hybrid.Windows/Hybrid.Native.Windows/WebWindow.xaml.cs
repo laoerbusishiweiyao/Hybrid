@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Text.Json;
+using System.Windows;
+using System.Windows.Interop;
 using CefSharp;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -9,9 +12,9 @@ public partial class WebWindow : Window
 {
     private readonly IOptions<AppSettings> settings;
 
-    private readonly NamedPipeSession session;
+    private readonly MemoryMappedFileSession session;
 
-    public WebWindow(IOptions<AppSettings> settings, NamedPipeSession session)
+    public WebWindow(IOptions<AppSettings> settings, MemoryMappedFileSession session)
     {
         this.settings = settings;
         this.session = session;
@@ -22,20 +25,65 @@ public partial class WebWindow : Window
         Loaded += OnLoaded;
 
         session.MessageReceived += OnMessageReceived;
+
+        Send(Opcode.Wpf2UnityLoadedMessage, new Wpf2UnityLoadedMessage { ProcessId = Environment.ProcessId });
     }
 
-    private void OnMessageReceived(object? sender, NamedPipeMessageEventArgs eventArgs)
+    private void OnMessageReceived(object? sender, MemoryMappedFileReceivedEventArgs eventArgs)
     {
         Log.Debug("receive {opcode} = {content}", eventArgs.Opcode, eventArgs.Payload);
+
+        if (eventArgs.Opcode is Opcode.Unity2WpfFocusChangedMessage)
+        {
+            if (JsonSerializer.Deserialize<Unity2WpfFocusChangedMessage>(eventArgs.Payload) is { } payload)
+            {
+                if (CheckAccess())
+                {
+                    OnUnityFocusChanged(payload.HasFocus);
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => OnUnityFocusChanged(payload.HasFocus));
+                }
+            }
+
+            return;
+        }
+
         Browser.EvaluateScriptAsync($"window.receive({eventArgs.Opcode}, {eventArgs.Payload})");
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
+    private void OnUnityFocusChanged(bool hasFocus)
     {
-        Left = settings.Value.LaunchOptions.Left;
-        Top = settings.Value.LaunchOptions.Top;
-        Width = settings.Value.LaunchOptions.Width;
-        Height = settings.Value.LaunchOptions.Height;
+        Log.Information("Unity Focus: {hasFocus}", hasFocus);
+        if (hasFocus)
+        {
+            Topmost = true;
+            Visibility = Visibility.Visible;
+        }
+        else
+        {
+            Topmost = false;
+            Visibility = Visibility.Hidden;
+        }
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs eventArgs)
+    {
+        if (settings.Value.LaunchOptions.ProcessId is 0)
+        {
+            Left = 0;
+            Top = 0;
+            Width = SystemParameters.PrimaryScreenWidth;
+            Height = SystemParameters.PrimaryScreenHeight;
+        }
+        else
+        {
+            Left = settings.Value.LaunchOptions.Left;
+            Top = settings.Value.LaunchOptions.Top;
+            Width = settings.Value.LaunchOptions.Width;
+            Height = settings.Value.LaunchOptions.Height;
+        }
 
         LoadBrowser();
     }
@@ -95,6 +143,17 @@ public partial class WebWindow : Window
             return;
         }
 
-        session.Send(message);
+        if (JsonSerializer.Deserialize<MessageInfo>(message, AppSettings.DefaultJsonSerializerOptions) is not { } info)
+        {
+            Log.Warning("CefSharp Web Message Deserialize Failed.\n{message}", message);
+            return;
+        }
+
+        session.Send(info.Opcode, info.Payload);
+    }
+
+    private void Send(ushort opcode, object message)
+    {
+        session.Send(opcode, message);
     }
 }
