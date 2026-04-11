@@ -1,7 +1,16 @@
-﻿namespace Chaos
+﻿using System.Text.Json;
+
+namespace Chaos
 {
     public sealed class Options : Singleton<Options>, ISingletonAwake
     {
+        public static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new()
+        {
+            IncludeFields = true,
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+
         public void Awake()
         {
         }

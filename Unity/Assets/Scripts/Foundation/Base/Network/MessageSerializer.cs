@@ -29,13 +29,13 @@ namespace Chaos
             return instance as MessageObject;
         }
 
-        public static ushort MessageToStream(MemoryBuffer stream, MessageObject message, int headOffset = 0)
+        public static ushort MessageToStream(MemoryBuffer stream, MessageObject message, int headerOffset = 0)
         {
             var opcode = OpcodeTypeRegistry.Default.GetOpcode(message.GetType());
-            stream.Seek(headOffset + Packet.OpcodeLength, SeekOrigin.Begin);
-            stream.SetLength(headOffset + Packet.OpcodeLength);
+            stream.Seek(headerOffset + Packet.OpcodeLength, SeekOrigin.Begin);
+            stream.SetLength(headerOffset + Packet.OpcodeLength);
 
-            stream.GetBuffer().WriteTo(headOffset, opcode);
+            stream.GetBuffer().WriteTo(headerOffset, opcode);
 
             Serialize(message, stream);
 

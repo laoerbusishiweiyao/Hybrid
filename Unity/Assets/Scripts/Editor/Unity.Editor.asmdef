@@ -3,7 +3,10 @@
     "rootNamespace": "",
     "references": [
         "Unity.Foundation",
-        "Unity.Loader"
+        "Unity.Loader",
+        "HybridCLR.Editor",
+        "YooAsset",
+        "YooAsset.Editor"
     ],
     "includePlatforms": [
         "Editor"

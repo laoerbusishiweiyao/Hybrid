@@ -1,9 +1,9 @@
-using MemoryPack;
-
-namespace Chaos
-{
-    [MemoryPackable]
-    public sealed partial class WebWindowShutdown : MessageObject
-    {
-    }
-}
+// using MemoryPack;
+//
+// namespace Chaos
+// {
+//     [MemoryPackable]
+//     public sealed partial class WebWindowShutdown : MessageObject
+//     {
+//     }
+// }

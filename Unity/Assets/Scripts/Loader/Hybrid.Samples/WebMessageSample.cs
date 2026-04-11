@@ -10,14 +10,14 @@ namespace Chaos
     {
         private void Awake()
         {
-            GameObject.Find("/Canvas/SendButton").GetComponent<Button>().onClick.AddListener(() => { WebSession.Default.Send(new UnityInitialized()); });
-
-            GameObject.Find("/Canvas/SendAsyncButton").GetComponent<Button>().onClick.AddListener(async () =>
-            {
-                var start = DateTime.Now;
-                var response = await WebSession.Default.SendAsync(new BrowserInformationRequest());
-                GameObject.Find("/Canvas/WebMessageConsole").GetComponent<TextMeshProUGUI>().text = $"received response({(DateTime.Now - start).TotalMilliseconds}ms): {response}\n";
-            });
+            // GameObject.Find("/Canvas/SendButton").GetComponent<Button>().onClick.AddListener(() => { WebSession.Default.Send(new UnityInitialized()); });
+            //
+            // GameObject.Find("/Canvas/SendAsyncButton").GetComponent<Button>().onClick.AddListener(async () =>
+            // {
+            //     var start = DateTime.Now;
+            //     var response = await WebSession.Default.SendAsync(new BrowserInformationRequest());
+            //     GameObject.Find("/Canvas/WebMessageConsole").GetComponent<TextMeshProUGUI>().text = $"received response({(DateTime.Now - start).TotalMilliseconds}ms): {response}\n";
+            // });
         }
 
         public void OnPointerClick(PointerEventData eventData)

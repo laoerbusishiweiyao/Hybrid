@@ -15,7 +15,8 @@ namespace Chaos
                     .Enrich.WithProperty("Fiber", "Editor")
                     .MinimumLevel.Verbose()
                     .WriteTo.Unity()
-                    .CreateLogger();
+                    .CreateLogger()
+                    .ForContext("Scene", "Editor");
             }
         }
     }

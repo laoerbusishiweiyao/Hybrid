@@ -1,6 +1,6 @@
-namespace Chaos
-{
-    public interface IWebMessage : IMessage
-    {
-    }
-}
+// namespace Chaos
+// {
+//     public interface IWebMessage : IMessage
+//     {
+//     }
+// }

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbd065002bc4288a208510efdf88f28, type: 3}
   m_Name: GlobalSettings
   m_EditorClassIdentifier: Unity.Loader::Chaos.GlobalSettings
+  Version: 1.0.0
   SceneName: Sample
   Address: 127.0.0.1:10101
+  WebUiLaunchPath: Hybrid.Native.Windows.exe

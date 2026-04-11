@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Serilog;
+using TMPro;
 using UnityEngine;
 
 namespace Chaos
@@ -24,8 +25,8 @@ namespace Chaos
 #if UNITY_EDITOR
                 await ThreadTask.CompletedTask;
 #else
-                dlls = await YooAssetsComponent.Default.LoadAllAssetsAsync<TextAsset>("Unity.Model.dll");
-                aotDlls = await YooAssetsComponent.Default.LoadAllAssetsAsync<TextAsset>("mscorlib.dll");
+                dlls = await YooAssetsComponent.Default.LoadAllAssetsAsync<TextAsset>("Assets/Bundles/DefaultPackage/Code/Unity.Model.dll.bytes");
+                aotDlls = await YooAssetsComponent.Default.LoadAllAssetsAsync<TextAsset>("Assets/Bundles/DefaultPackage/AotDlls/mscorlib.dll.bytes");
 #endif
             }
             catch (Exception exception)
@@ -37,7 +38,6 @@ namespace Chaos
         public async ThreadTask StartAsync()
         {
             await DownloadAsync();
-
 
             HashSet<string> assemblyNames = new()
             {
@@ -133,7 +133,7 @@ namespace Chaos
             var hotfixPdbBytes = dlls["Unity.Hotfix.pdb"].bytes;
             var hotfixViewAssemblyBytes = dlls["Unity.HotfixView.dll"].bytes;
             var hotfixViewPdbBytes = dlls["Unity.HotfixView.pdb"].bytes;
-            
+
             var hotfixAssembly = Assembly.Load(hotfixAssemblyBytes, hotfixPdbBytes);
             var hotfixViewAssembly = Assembly.Load(hotfixViewAssemblyBytes, hotfixViewPdbBytes);
 #endif

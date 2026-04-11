@@ -195,7 +195,7 @@ namespace Chaos
         /// <param name="sceneType"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public async ThreadTask<Fiber> CreateFiber(long rootId, int zone, int sceneType, string name)
+        public async ThreadTask<Fiber> CreateFiberAsync(long rootId, int zone, int sceneType, string name)
         {
             var fiber = await FiberRegistry.Default.CreateFiberAsync(SchedulerType.Parent, rootId, zone, sceneType, name, this);
             children.Add(fiber.Id, fiber);
@@ -218,7 +218,7 @@ namespace Chaos
             return fiber;
         }
 
-        public async ThreadTask<int> CreateFiber(SchedulerType schedulerType, long rootId, int zone, int sceneType, string name)
+        public async ThreadTask<int> CreateFiberAsync(SchedulerType schedulerType, long rootId, int zone, int sceneType, string name)
         {
             if (Options.Default.SingleThread == 1)
             {

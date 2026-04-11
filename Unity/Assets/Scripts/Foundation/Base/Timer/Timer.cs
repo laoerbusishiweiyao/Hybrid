@@ -2,9 +2,9 @@
 {
     public abstract class Timer<T>: InvokeHandler<TimerCallback> where T: Entity
     {
-        public override void Handle(TimerCallback a)
+        public override void Handle(TimerCallback eventArgs)
         {
-            this.Run(a.Args.Entity as T);
+            this.Run(eventArgs.Args.Entity as T);
         }
 
         protected abstract void Run(T t);

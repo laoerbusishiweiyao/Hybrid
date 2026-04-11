@@ -3,6 +3,7 @@ using System.IO;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Formatting;
+using TMPro;
 using UnityEngine;
 
 namespace Chaos
@@ -34,6 +35,17 @@ namespace Chaos
                 .Insert(31, $"<color={colors[logEvent.Level]}>")
                 .Insert(51, "</color>");
             Debug.Log(message);
+
+            if (Application.isEditor && !Application.isPlaying)
+            {
+                return;
+            }
+
+            var console = GameObject.Find("/Canvas/Scroll View/Viewport/WebMessageConsole");
+            if (console)
+            {
+                console.GetComponent<TextMeshProUGUI>().text += $"{message}\n";
+            }
         }
     }
 }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: YooAssetBuildSettings
   m_EditorClassIdentifier: Unity.Loader::Chaos.YooAssetBuildSettings
   PlayMode: 0
-  Url: 
+  Url: http://127.0.0.1:12345

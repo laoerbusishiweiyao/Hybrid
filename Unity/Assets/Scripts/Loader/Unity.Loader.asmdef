@@ -17,7 +17,8 @@
         "System.IO.Pipelines.dll",
         "MemoryPack.Core.dll",
         "System.Threading.Channels.dll",
-        "Serilog.dll"
+        "Serilog.dll",
+        "Serilog.Sinks.File.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

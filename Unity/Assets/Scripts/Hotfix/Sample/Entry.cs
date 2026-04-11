@@ -17,8 +17,7 @@ namespace Chaos
             MongoRegister.Initialize();
             MemoryPackRegister.Initialize();
 
-            // // 注册Entity序列化器
-            // EntitySerializeRegister.Init();
+            EntitySerializeRegister.Initialize();
 
             MongoRegister.RegisterStruct<float2>();
             MongoRegister.RegisterStruct<float3>();
@@ -30,20 +29,22 @@ namespace Chaos
             World.Default.AddSingleton<IdGenerator>();
             World.Default.AddSingleton<OpcodeTypeRegistry>();
 
-            // World.Instance.AddSingleton<MessageQueue>();
+            World.Default.AddSingleton<MessageQueue>();
 
-            // LogMsg logMsg = World.Instance.AddSingleton<LogMsg>();
-            // logMsg.AddIgnore(typeof(C2G_Ping));
-            // logMsg.AddIgnore(typeof(G2C_Ping));
-            // logMsg.AddIgnore(typeof(MessageResponse));
+            var networkLogger = World.Default.AddSingleton<NetworkLogger>();
+            networkLogger.AddIgnore(typeof(Client2GatePingRequest));
+            networkLogger.AddIgnore(typeof(Gate2ClientPingResponse));
+            networkLogger.AddIgnore(typeof(MessageResponse));
+
+            World.Default.AddSingleton<WebUiLogger>();
 
             CodeTypeRegistry.Default.Execute();
-            //
-            // await World.Instance.AddSingleton<ConfigLoader>().LoadAsync();
-            // World.Instance.AddSingleton<NavmeshComponent>();
-            //
-            // int sceneType = SceneTypeSingleton.Instance.GetSceneType(Options.Instance.SceneName);
-            // await FiberManager.Instance.CreateMainFiber(sceneType, $"{Options.Instance.SceneName}@{Options.Instance.Process}@{Options.Instance.ReplicaIndex}");
+
+            // await World.Default.AddSingleton<ConfigLoader>().LoadAsync();
+            // World.Default.AddSingleton<NavmeshComponent>();
+
+            var sceneType = SceneTypeMapper.Default.GetSceneType(Options.Default.SceneName);
+            await FiberRegistry.Default.CreateMainFiberAsync(sceneType, $"{Options.Default.SceneName}@{Options.Default.Process}@{Options.Default.ReplicaIndex}");
 
             await ThreadTask.CompletedTask;
         }

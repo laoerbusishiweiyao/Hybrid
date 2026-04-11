@@ -12,13 +12,13 @@ namespace Chaos
     {
         Type IEvent.EventType => typeof(TEventArgs);
 
-        protected abstract ThreadTask Run(TScene scene, TEventArgs eventArgs);
+        protected abstract ThreadTask RunAsync(TScene scene, TEventArgs eventArgs);
 
         public async ThreadTask Handle(TScene scene, TEventArgs eventArgs)
         {
             try
             {
-                await Run(scene, eventArgs);
+                await RunAsync(scene, eventArgs);
             }
             catch (Exception exception)
             {

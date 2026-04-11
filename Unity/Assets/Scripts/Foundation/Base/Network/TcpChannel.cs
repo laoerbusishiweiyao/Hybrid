@@ -7,7 +7,7 @@ namespace Chaos
 {
     public sealed class TcpChannel : Channel
     {
-        private readonly TcpService Service;
+        private readonly TcpService service;
 		private Socket socket;
 		private SocketAsyncEventArgs innArgs = new();
 		private SocketAsyncEventArgs outArgs = new();
@@ -25,17 +25,17 @@ namespace Chaos
 		
 		private void OnComplete(object sender, SocketAsyncEventArgs e)
 		{
-			Service.Queue.Enqueue(new TcpEventArgs() {ChannelId = Id, SocketAsyncEventArgs = e});
+			service.Queue.Enqueue(new TcpEventArgs() {ChannelId = Id, SocketAsyncEventArgs = e});
 		}
 		
 		public TcpChannel(long id, IPEndPoint ipEndPoint, TcpService service)
 		{
-			Service = service;
+			this.service = service;
 			ChannelType = ChannelType.Connect;
 			Id = id;
 			socket = new Socket(ipEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 			socket.NoDelay = true;
-			parser = new PacketParser(recvBuffer, Service);
+			parser = new PacketParser(recvBuffer, this.service);
 			innArgs.Completed += OnComplete;
 			outArgs.Completed += OnComplete;
 
@@ -43,17 +43,17 @@ namespace Chaos
 			isConnected = false;
 			isSending = false;
 			
-			Service.Queue.Enqueue(new TcpEventArgs(){Operation = TcpOperation.Connect,ChannelId = Id});
+			this.service.Queue.Enqueue(new TcpEventArgs(){Operation = TcpOperation.Connect,ChannelId = Id});
 		}
 		
 		public TcpChannel(long id, Socket socket, TcpService service)
 		{
-			Service = service;
+			this.service = service;
 			ChannelType = ChannelType.Accept;
 			Id = id;
 			this.socket = socket;
 			this.socket.NoDelay = true;
-			parser = new PacketParser(recvBuffer, Service);
+			parser = new PacketParser(recvBuffer, this.service);
 			innArgs.Completed += OnComplete;
 			outArgs.Completed += OnComplete;
 
@@ -61,8 +61,8 @@ namespace Chaos
 			isConnected = true;
 			isSending = false;
 			
-			Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
-			Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartRecv, ChannelId = Id});
+			this.service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
+			this.service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartRecv, ChannelId = Id});
 		}
 		
 		
@@ -78,7 +78,7 @@ namespace Chaos
 			
 			long id = Id;
 			Id = 0;
-			Service.Remove(id);
+			service.Remove(id);
 			socket.Close();
 			innArgs.Dispose();
 			outArgs.Dispose();
@@ -94,7 +94,7 @@ namespace Chaos
 				throw new Exception("TChannel已经被Dispose, 不能发送消息");
 			}
 			
-			switch (Service.ServiceType)
+			switch (service.ServiceType)
 			{
 				case ServiceType.Internal:
 				{
@@ -120,10 +120,10 @@ namespace Chaos
 			sendBuffer.Write(stream.GetBuffer(), (int)stream.Position, (int)(stream.Length - stream.Position));
 			if (!isSending)
 			{
-				Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
+				service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
 			}
 			
-			Service.Recycle(stream);
+			service.Recycle(stream);
 		}
 
 		public void ConnectAsync()
@@ -152,8 +152,8 @@ namespace Chaos
 			e.RemoteEndPoint = null;
 			isConnected = true;
 			
-			Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
-			Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartRecv, ChannelId = Id});
+			service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
+			service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartRecv, ChannelId = Id});
 		}
 
 		public void OnDisconnectComplete(SocketAsyncEventArgs e)
@@ -199,7 +199,7 @@ namespace Chaos
 				return;
 			}
 			
-			Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartRecv, ChannelId = Id});
+			service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartRecv, ChannelId = Id});
 		}
 
 		private void HandleRecv(SocketAsyncEventArgs e)
@@ -316,7 +316,7 @@ namespace Chaos
 			
 			isSending = false;
 			
-			Service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
+			service.Queue.Enqueue(new TcpEventArgs() { Operation = TcpOperation.StartSend, ChannelId = Id});
 		}
 
 		private void HandleSend(SocketAsyncEventArgs e)
@@ -350,7 +350,7 @@ namespace Chaos
 		{
 			try
 			{
-				Service.ReadCallback(Id, memoryStream);
+				service.ReadCallback(Id, memoryStream);
 			}
 			catch (Exception exception)
 			{
@@ -365,9 +365,9 @@ namespace Chaos
 			
 			long channelId = Id;
 			
-			Service.Remove(channelId);
+			service.Remove(channelId);
 			
-			Service.ErrorCallback(channelId, error);
+			service.ErrorCallback(channelId, error);
 		}
     }
 }

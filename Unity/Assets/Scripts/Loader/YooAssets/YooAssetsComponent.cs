@@ -1,10 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
+using Serilog;
+using TMPro;
 using UnityEngine;
 using YooAsset;
 
 namespace Chaos
 {
+    public sealed class YooAssetsFileOffsetDecryption : IDecryptionServices
+    {
+        /// <summary>
+        /// 同步方式获取解密的资源包对象
+        /// 注意：加载流对象在资源包对象释放的时候会自动释放
+        /// </summary>
+        DecryptResult IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo)
+        {
+            var decryptResult = new DecryptResult
+            {
+                ManagedStream = null,
+                Result = AssetBundle.LoadFromFile(fileInfo.FileLoadPath, fileInfo.FileLoadCRC, GetFileOffset())
+            };
+            return decryptResult;
+        }
+
+        /// <summary>
+        /// 异步方式获取解密的资源包对象
+        /// 注意：加载流对象在资源包对象释放的时候会自动释放
+        /// </summary>
+        DecryptResult IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo)
+        {
+            var decryptResult = new DecryptResult
+            {
+                ManagedStream = null,
+                CreateRequest = AssetBundle.LoadFromFileAsync(fileInfo.FileLoadPath, fileInfo.FileLoadCRC, GetFileOffset())
+            };
+            return decryptResult;
+        }
+
+        /// <summary>
+        /// 后备方式获取解密的资源包对象
+        /// </summary>
+        DecryptResult IDecryptionServices.LoadAssetBundleFallback(DecryptFileInfo fileInfo)
+        {
+            return new DecryptResult();
+        }
+
+        /// <summary>
+        /// 获取解密的字节数据
+        /// </summary>
+        byte[] IDecryptionServices.ReadFileData(DecryptFileInfo fileInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 获取解密的文本数据
+        /// </summary>
+        string IDecryptionServices.ReadFileText(DecryptFileInfo fileInfo)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static ulong GetFileOffset()
+        {
+            return 32;
+        }
+    }
+
     public sealed class RemoteServices : IRemoteServices
     {
         private readonly string defaultHostServer;
@@ -80,7 +142,8 @@ namespace Chaos
                         BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters(),
                         CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(services)
                     };
-                    await package.InitializeAsync(parameters).Task;
+                    var initialization = package.InitializeAsync(parameters);
+                    await initialization.Task;
                     break;
                 }
                 case EPlayMode.WebPlayMode:
@@ -102,43 +165,47 @@ namespace Chaos
 
             var version = package.RequestPackageVersionAsync();
             await version.Task;
-            await package.UpdatePackageManifestAsync(version.PackageVersion).Task;
+
+            var manifest = package.UpdatePackageManifestAsync(version.PackageVersion);
+            await manifest.Task;
         }
 
-        string GetHostServerURL(string url, string pacakgeName)
+        string GetHostServerURL(string url, string packageName)
         {
+            var settings = Resources.Load<GlobalSettings>(nameof(GlobalSettings));
+
             //string hostServerIP = "http://10.0.2.2"; //安卓模拟器地址
             string hostServerIP = url;
-            string appVersion = "v1.0";
+            var appVersion = settings.Version;
 
 
 #if UNITY_EDITOR
             switch (UnityEditor.EditorUserBuildSettings.activeBuildTarget)
             {
                 case UnityEditor.BuildTarget.Android:
-                    return $"{hostServerIP}/CDN/Android/{appVersion}";
+                    return $"{hostServerIP}/cdn/Android/{appVersion}";
                 case UnityEditor.BuildTarget.iOS:
-                    return $"{hostServerIP}/CDN/IPhone/{appVersion}";
+                    return $"{hostServerIP}/cdn/IPhone/{appVersion}";
                 case UnityEditor.BuildTarget.WebGL:
                 {
-                    return $"{hostServerIP}/StreamingAssets/Bundles/{pacakgeName}";
+                    return $"{hostServerIP}/StreamingAssets/Bundles/{packageName}";
                 }
                 default:
-                    return $"{hostServerIP}/CDN/PC/{appVersion}";
+                    return $"{hostServerIP}/cdn/windows/{appVersion}";
             }
 #else
             switch (Application.platform)
             {
                 case RuntimePlatform.Android:
-                    return $"{hostServerIP}/CDN/Android/{appVersion}";
+                    return $"{hostServerIP}/cdn/Android/{appVersion}";
                 case RuntimePlatform.IPhonePlayer:
-                    return $"{hostServerIP}/CDN/IPhone/{appVersion}";
+                    return $"{hostServerIP}/cdn/IPhone/{appVersion}";
                 case RuntimePlatform.WebGLPlayer:
                 {
-                    return $"{hostServerIP}/StreamingAssets/Bundles/{pacakgeName}";
+                    return $"{hostServerIP}/StreamingAssets/Bundles/{packageName}";
                 }
                 default:
-                    return $"{hostServerIP}/CDN/PC/{appVersion}";
+                    return $"{hostServerIP}/cdn/windows/{appVersion}";
             }
 #endif
         }

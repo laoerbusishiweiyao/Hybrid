@@ -1,6 +1,6 @@
-namespace Chaos
-{
-    public interface IWebRequest : IWebMessage, IRequest
-    {
-    }
-}
+// namespace Chaos
+// {
+//     public interface IWebRequest : IWebMessage, IRequest
+//     {
+//     }
+// }

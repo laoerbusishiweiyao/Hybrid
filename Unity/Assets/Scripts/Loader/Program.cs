@@ -1,6 +1,7 @@
 using System;
-using System.Threading;
+using System.IO;
 using Serilog;
+using Serilog.Events;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
@@ -16,14 +17,15 @@ namespace Chaos
                 Log.CloseAndFlush();
             }
 
-            // var configuration = new ConfigurationBuilder()
-            //     .SetBasePath(AppContext.BaseDirectory)
-            //     .AddJsonFile("appsettings.json", false)
-            //     .Build();
-
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
+#if UNITY_EDITOR
                 .WriteTo.Unity()
+#elif UNITY_STANDALONE
+                .WriteTo.Unity()
+                .WriteTo.Windows("Logs", LogEventLevel.Debug)
+#elif UNITY_ANDROID
+                .WriteTo.Android(Path.Combine(Application.persistentDataPath, "Logs"), LogEventLevel.Debug)
+#endif
                 .CreateLogger().ForContext("Scene", "Main");
         }
 
@@ -106,31 +108,5 @@ namespace Chaos
             Log.Information("程序退出");
             Log.CloseAndFlush();
         }
-
-
-        // private void Awake()
-        // {
-        //     AppDomain.CurrentDomain.UnhandledException += (sender, args) => Debug.LogError(args.ExceptionObject);
-        //
-        //     unitySynchronizationContext = SynchronizationContext.Current;
-        //     SynchronizationContext.SetSynchronizationContext(ThreadSynchronizationContext.Default);
-        //
-        //     _ = WebContext.InitializeAsync("http://192.168.10.31:12345/");
-        // }
-        //
-        // private void Update()
-        // {
-        //     ThreadSynchronizationContext.Default.Update();
-        // }
-        //
-        // private void OnApplicationQuit()
-        // {
-        //     WebMessageDispatcher.Default.Dispose();
-        //     NamedPipeSession.Default.Dispose();
-        //     WebContext.Shutdown();
-        //
-        //     SynchronizationContext.SetSynchronizationContext(unitySynchronizationContext);
-        //     unitySynchronizationContext = null;
-        // }
     }
 }

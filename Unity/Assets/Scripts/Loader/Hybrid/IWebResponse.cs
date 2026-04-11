@@ -1,6 +1,6 @@
-namespace Chaos
-{
-    public interface IWebResponse : IWebMessage, IResponse
-    {
-    }
-}
+// namespace Chaos
+// {
+//     public interface IWebResponse : IWebMessage, IResponse
+//     {
+//     }
+// }

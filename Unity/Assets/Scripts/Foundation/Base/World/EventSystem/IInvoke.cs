@@ -11,7 +11,7 @@ namespace Chaos
     {
         public Type EventType => typeof(TEventArgs);
 
-        public abstract void Handle(TEventArgs args);
+        public abstract void Handle(TEventArgs eventArgs);
     }
 
     public abstract class InvokeHandler<TEventArgs, TResult> : HandlerObject, IInvoke where TEventArgs : struct

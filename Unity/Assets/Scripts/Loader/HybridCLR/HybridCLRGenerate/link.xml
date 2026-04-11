@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<linker>
+  <assembly fullname="MemoryPack.Core">
+    <type fullname="MemoryPack.Formatters.ArrayFormatter`1" preserve="all" />
+    <type fullname="MemoryPack.Formatters.NullableFormatter`1" preserve="all" />
+    <type fullname="MemoryPack.GenerateType" preserve="all" />
+    <type fullname="MemoryPack.IMemoryPackFormatterRegister" preserve="all" />
+    <type fullname="MemoryPack.IMemoryPackable`1" preserve="all" />
+    <type fullname="MemoryPack.Internal.PreserveAttribute" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackFormatterProvider" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackFormatter`1" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackOrderAttribute" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackReader" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackSerializationException" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackWriter`1" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackableAttribute" preserve="all" />
+  </assembly>
+  <assembly fullname="MongoDB.Bson">
+    <type fullname="MongoDB.Bson.Serialization.Attributes.BsonElementAttribute" preserve="all" />
+    <type fullname="MongoDB.Bson.Serialization.Attributes.BsonIgnoreAttribute" preserve="all" />
+  </assembly>
+  <assembly fullname="Serilog">
+    <type fullname="Serilog.ILogger" preserve="all" />
+    <type fullname="Serilog.Log" preserve="all" />
+  </assembly>
+  <assembly fullname="System.IO.Pipelines">
+    <type fullname="System.IO.Pipelines.FlushResult" preserve="all" />
+    <type fullname="System.IO.Pipelines.Pipe" preserve="all" />
+    <type fullname="System.IO.Pipelines.PipeOptions" preserve="all" />
+    <type fullname="System.IO.Pipelines.PipeReader" preserve="all" />
+    <type fullname="System.IO.Pipelines.PipeScheduler" preserve="all" />
+    <type fullname="System.IO.Pipelines.PipeWriter" preserve="all" />
+    <type fullname="System.IO.Pipelines.ReadResult" preserve="all" />
+  </assembly>
+  <assembly fullname="System.Text.Json">
+    <type fullname="System.Text.Json.JsonNamingPolicy" preserve="all" />
+    <type fullname="System.Text.Json.JsonSerializer" preserve="all" />
+    <type fullname="System.Text.Json.JsonSerializerOptions" preserve="all" />
+  </assembly>
+  <assembly fullname="System.Threading.Channels">
+    <type fullname="System.Threading.Channels.Channel" preserve="all" />
+    <type fullname="System.Threading.Channels.ChannelReader`1" preserve="all" />
+    <type fullname="System.Threading.Channels.ChannelWriter`1" preserve="all" />
+    <type fullname="System.Threading.Channels.Channel`1" preserve="all" />
+    <type fullname="System.Threading.Channels.Channel`2" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Foundation">
+    <type fullname="Chaos.Address" preserve="all" />
+    <type fullname="Chaos.AwakeSystem`1" preserve="all" />
+    <type fullname="Chaos.AwakeSystem`2" preserve="all" />
+    <type fullname="Chaos.BaseAttribute" preserve="all" />
+    <type fullname="Chaos.CancelSignal" preserve="all" />
+    <type fullname="Chaos.CancelSignalExtensions" preserve="all" />
+    <type fullname="Chaos.ChildOfAttribute" preserve="all" />
+    <type fullname="Chaos.CodeMapper`1" preserve="all" />
+    <type fullname="Chaos.CodeProcessAttribute" preserve="all" />
+    <type fullname="Chaos.CodeTypeRegistry" preserve="all" />
+    <type fullname="Chaos.ComponentOfAttribute" preserve="all" />
+    <type fullname="Chaos.CoroutineLockComponent" preserve="all" />
+    <type fullname="Chaos.DestroySystem`1" preserve="all" />
+    <type fullname="Chaos.DisposableObject" preserve="all" />
+    <type fullname="Chaos.Entity" preserve="all" />
+    <type fullname="Chaos.EntityExtensions" preserve="all" />
+    <type fullname="Chaos.EntityReference`1" preserve="all" />
+    <type fullname="Chaos.EntitySystemAttribute" preserve="all" />
+    <type fullname="Chaos.EntitySystemOfAttribute" preserve="all" />
+    <type fullname="Chaos.EventHandlerAttribute" preserve="all" />
+    <type fullname="Chaos.EventHandler`2" preserve="all" />
+    <type fullname="Chaos.EventSystem" preserve="all" />
+    <type fullname="Chaos.Fiber" preserve="all" />
+    <type fullname="Chaos.FiberInitializeEventArgs" preserve="all" />
+    <type fullname="Chaos.FiberInstanceId" preserve="all" />
+    <type fullname="Chaos.FiberRegistry" preserve="all" />
+    <type fullname="Chaos.HandlerObject" preserve="all" />
+    <type fullname="Chaos.IAwake" preserve="all" />
+    <type fullname="Chaos.IAwake`1" preserve="all" />
+    <type fullname="Chaos.IDestroy" preserve="all" />
+    <type fullname="Chaos.IEvent`1" preserve="all" />
+    <type fullname="Chaos.IKcpTransport" preserve="all" />
+    <type fullname="Chaos.ILocationMessage" preserve="all" />
+    <type fullname="Chaos.IMessage" preserve="all" />
+    <type fullname="Chaos.IRequest" preserve="all" />
+    <type fullname="Chaos.IResponse" preserve="all" />
+    <type fullname="Chaos.IScene" preserve="all" />
+    <type fullname="Chaos.ISingletonAwake" preserve="all" />
+    <type fullname="Chaos.ITestMessage" preserve="all" />
+    <type fullname="Chaos.IUpdate" preserve="all" />
+    <type fullname="Chaos.IWebMessage" preserve="all" />
+    <type fullname="Chaos.IWebRequest" preserve="all" />
+    <type fullname="Chaos.IWebResponse" preserve="all" />
+    <type fullname="Chaos.IdGenerator" preserve="all" />
+    <type fullname="Chaos.InvokeHandlerAttribute" preserve="all" />
+    <type fullname="Chaos.InvokeHandler`1" preserve="all" />
+    <type fullname="Chaos.InvokeHandler`2" preserve="all" />
+    <type fullname="Chaos.KcpService" preserve="all" />
+    <type fullname="Chaos.Mailboxes" preserve="all" />
+    <type fullname="Chaos.MemoryBuffer" preserve="all" />
+    <type fullname="Chaos.MemoryPackRegister" preserve="all" />
+    <type fullname="Chaos.MessageAttribute" preserve="all" />
+    <type fullname="Chaos.MessageObject" preserve="all" />
+    <type fullname="Chaos.MessageResponse" preserve="all" />
+    <type fullname="Chaos.MessageSerializer" preserve="all" />
+    <type fullname="Chaos.MongoRegister" preserve="all" />
+    <type fullname="Chaos.Object" preserve="all" />
+    <type fullname="Chaos.ObjectPool" preserve="all" />
+    <type fullname="Chaos.OpcodeTypeRegistry" preserve="all" />
+    <type fullname="Chaos.Options" preserve="all" />
+    <type fullname="Chaos.ResponseTypeAttribute" preserve="all" />
+    <type fullname="Chaos.RpcException" preserve="all" />
+    <type fullname="Chaos.Scene" preserve="all" />
+    <type fullname="Chaos.SceneTypeMapper" preserve="all" />
+    <type fullname="Chaos.SchedulerType" preserve="all" />
+    <type fullname="Chaos.Service" preserve="all" />
+    <type fullname="Chaos.ServiceType" preserve="all" />
+    <type fullname="Chaos.SharedRandom" preserve="all" />
+    <type fullname="Chaos.Singleton`1" preserve="all" />
+    <type fullname="Chaos.ThreadTask" preserve="all" />
+    <type fullname="Chaos.ThreadTaskAsyncMethodBuilder" preserve="all" />
+    <type fullname="Chaos.ThreadTaskAsyncMethodBuilder`1" preserve="all" />
+    <type fullname="Chaos.ThreadTask`1" preserve="all" />
+    <type fullname="Chaos.TimeInfo" preserve="all" />
+    <type fullname="Chaos.TimerComponent" preserve="all" />
+    <type fullname="Chaos.TimerComponentSystem" preserve="all" />
+    <type fullname="Chaos.Timer`1" preserve="all" />
+    <type fullname="Chaos.UniqueIdAttribute" preserve="all" />
+    <type fullname="Chaos.UpdateEventArgs" preserve="all" />
+    <type fullname="Chaos.UpdateSystem`1" preserve="all" />
+    <type fullname="Chaos.WindowsNativeMethods" preserve="all" />
+    <type fullname="Chaos.World" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Loader">
+    <type fullname="Chaos.AppSettings" preserve="all" />
+    <type fullname="Chaos.GlobalSettings" preserve="all" />
+  </assembly>
+  <assembly fullname="Unity.Mathematics">
+    <type fullname="Unity.Mathematics.float2" preserve="all" />
+    <type fullname="Unity.Mathematics.float3" preserve="all" />
+    <type fullname="Unity.Mathematics.float4" preserve="all" />
+    <type fullname="Unity.Mathematics.math" preserve="all" />
+    <type fullname="Unity.Mathematics.quaternion" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.CoreModule">
+    <type fullname="UnityEngine.Application" preserve="all" />
+    <type fullname="UnityEngine.GameObject" preserve="all" />
+    <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.Rect" preserve="all" />
+    <type fullname="UnityEngine.Resources" preserve="all" />
+    <type fullname="UnityEngine.Screen" preserve="all" />
+    <type fullname="UnityEngine.Transform" preserve="all" />
+  </assembly>
+  <assembly fullname="netstandard">
+    <type fullname="System.Action" preserve="all" />
+    <type fullname="System.Action`1" preserve="all" />
+    <type fullname="System.Action`2" preserve="all" />
+    <type fullname="System.Activator" preserve="all" />
+    <type fullname="System.Array" preserve="all" />
+    <type fullname="System.Attribute" preserve="all" />
+    <type fullname="System.AttributeTargets" preserve="all" />
+    <type fullname="System.AttributeUsageAttribute" preserve="all" />
+    <type fullname="System.Boolean" preserve="all" />
+    <type fullname="System.Buffers.BuffersExtensions" preserve="all" />
+    <type fullname="System.Buffers.IBufferWriter`1" preserve="all" />
+    <type fullname="System.Buffers.MemoryPool`1" preserve="all" />
+    <type fullname="System.Buffers.ReadOnlySequence`1" preserve="all" />
+    <type fullname="System.Buffers.ReadOnlySequence`1/Enumerator" preserve="all" />
+    <type fullname="System.Byte" preserve="all" />
+    <type fullname="System.CodeDom.Compiler.GeneratedCodeAttribute" preserve="all" />
+    <type fullname="System.Collections.Concurrent.ConcurrentDictionary`2" preserve="all" />
+    <type fullname="System.Collections.Concurrent.ConcurrentQueue`1" preserve="all" />
+    <type fullname="System.Collections.Generic.CollectionExtensions" preserve="all" />
+    <type fullname="System.Collections.Generic.Dictionary`2" preserve="all" />
+    <type fullname="System.Collections.Generic.Dictionary`2/Enumerator" preserve="all" />
+    <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection" preserve="all" />
+    <type fullname="System.Collections.Generic.EqualityComparer`1" preserve="all" />
+    <type fullname="System.Collections.Generic.HashSet`1" preserve="all" />
+    <type fullname="System.Collections.Generic.HashSet`1/Enumerator" preserve="all" />
+    <type fullname="System.Collections.Generic.IAsyncEnumerable`1" preserve="all" />
+    <type fullname="System.Collections.Generic.IAsyncEnumerator`1" preserve="all" />
+    <type fullname="System.Collections.Generic.IEnumerable`1" preserve="all" />
+    <type fullname="System.Collections.Generic.IEnumerator`1" preserve="all" />
+    <type fullname="System.Collections.Generic.IReadOnlyDictionary`2" preserve="all" />
+    <type fullname="System.Collections.Generic.KeyValuePair`2" preserve="all" />
+    <type fullname="System.Collections.Generic.List`1" preserve="all" />
+    <type fullname="System.Collections.Generic.List`1/Enumerator" preserve="all" />
+    <type fullname="System.Collections.IEnumerator" preserve="all" />
+    <type fullname="System.ComponentModel.EditorBrowsableAttribute" preserve="all" />
+    <type fullname="System.ComponentModel.EditorBrowsableState" preserve="all" />
+    <type fullname="System.Diagnostics.ConditionalAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerBrowsableAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerBrowsableState" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.Process" preserve="all" />
+    <type fullname="System.Double" preserve="all" />
+    <type fullname="System.Exception" preserve="all" />
+    <type fullname="System.Guid" preserve="all" />
+    <type fullname="System.IAsyncDisposable" preserve="all" />
+    <type fullname="System.IDisposable" preserve="all" />
+    <type fullname="System.IEquatable`1" preserve="all" />
+    <type fullname="System.IFormatProvider" preserve="all" />
+    <type fullname="System.IO.File" preserve="all" />
+    <type fullname="System.IO.InvalidDataException" preserve="all" />
+    <type fullname="System.IO.Path" preserve="all" />
+    <type fullname="System.IO.Pipes.NamedPipeClientStream" preserve="all" />
+    <type fullname="System.IO.Pipes.PipeDirection" preserve="all" />
+    <type fullname="System.IO.Pipes.PipeOptions" preserve="all" />
+    <type fullname="System.IO.Pipes.PipeStream" preserve="all" />
+    <type fullname="System.IO.Stream" preserve="all" />
+    <type fullname="System.Int32" preserve="all" />
+    <type fullname="System.Int64" preserve="all" />
+    <type fullname="System.InvalidOperationException" preserve="all" />
+    <type fullname="System.Linq.Enumerable" preserve="all" />
+    <type fullname="System.MemoryExtensions" preserve="all" />
+    <type fullname="System.Memory`1" preserve="all" />
+    <type fullname="System.Net.IPEndPoint" preserve="all" />
+    <type fullname="System.Nullable`1" preserve="all" />
+    <type fullname="System.Object" preserve="all" />
+    <type fullname="System.OperationCanceledException" preserve="all" />
+    <type fullname="System.ReadOnlyMemory`1" preserve="all" />
+    <type fullname="System.ReadOnlySpan`1" preserve="all" />
+    <type fullname="System.Reflection.CustomAttributeExtensions" preserve="all" />
+    <type fullname="System.Reflection.MemberInfo" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.AsyncStateMachineAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.CompilationRelaxationsAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.CompilerGeneratedAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.ExtensionAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.IAsyncStateMachine" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.IsReadOnlyAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.RuntimeCompatibilityAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.RuntimeHelpers" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.TaskAwaiter" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.TupleElementNamesAttribute" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.ValueTaskAwaiter" preserve="all" />
+    <type fullname="System.Runtime.CompilerServices.ValueTaskAwaiter`1" preserve="all" />
+    <type fullname="System.Runtime.ExceptionServices.ExceptionDispatchInfo" preserve="all" />
+    <type fullname="System.Runtime.InteropServices.MemoryMarshal" preserve="all" />
+    <type fullname="System.RuntimeFieldHandle" preserve="all" />
+    <type fullname="System.RuntimeTypeHandle" preserve="all" />
+    <type fullname="System.Security.Permissions.SecurityAction" preserve="all" />
+    <type fullname="System.Security.Permissions.SecurityPermissionAttribute" preserve="all" />
+    <type fullname="System.Security.UnverifiableCodeAttribute" preserve="all" />
+    <type fullname="System.SequencePosition" preserve="all" />
+    <type fullname="System.Span`1" preserve="all" />
+    <type fullname="System.String" preserve="all" />
+    <type fullname="System.StringSplitOptions" preserve="all" />
+    <type fullname="System.Text.Encoding" preserve="all" />
+    <type fullname="System.Text.StringBuilder" preserve="all" />
+    <type fullname="System.Threading.CancellationToken" preserve="all" />
+    <type fullname="System.Threading.Tasks.Task" preserve="all" />
+    <type fullname="System.Threading.Tasks.ValueTask" preserve="all" />
+    <type fullname="System.Threading.Tasks.ValueTask`1" preserve="all" />
+    <type fullname="System.Type" preserve="all" />
+    <type fullname="System.ValueTuple`2" preserve="all" />
+    <type fullname="System.ValueType" preserve="all" />
+  </assembly>
+</linker>

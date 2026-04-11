@@ -3,13 +3,19 @@
     "rootNamespace": "Chaos",
     "references": [
         "Unity.Foundation",
-        "Unity.Model"
+        "Unity.Model",
+        "Unity.Loader"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": true,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "System.IO.Pipelines.dll",
+        "System.Threading.Channels.dll",
+        "System.Text.Json.dll",
+        "Serilog.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [
         "UNITY_COMPILE || UNITY_EDITOR"
