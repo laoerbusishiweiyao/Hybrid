@@ -1,8 +1,8 @@
 import { RequestObject, type MessageObject, ResponseObject, type MessageType, type RequestType } from "./IMessage";
-import { WebLoaded } from "./Message";
-import { OpcodeRegistry } from "./OpcodeRegistry";
+import { Web2UnityLoadedMessage } from "../generated/message/Message";
 import { StatusCode } from "./StatusCode";
 import { UnityMessageDispatcher } from "./UnityMessageDispatcher";
+import { OpcodeTypeRegistry } from "@runtime/generated/message/OpcodeTypeRegistry";
 
 interface PlatformReadyEventDetail {
     platform: 'windows' | 'android' | 'ios' | 'macos' | 'linux';
@@ -26,6 +26,7 @@ class UnitySessionType {
         const customEvent = event as CustomEvent<PlatformReadyEventDetail>;
         const { platform } = customEvent.detail;
 
+        window.send = this.send;
         window.receive = this.receive;
 
         switch (platform) {
@@ -41,25 +42,25 @@ class UnitySessionType {
         }
 
         console.log(`Platform is ready: ${platform}`);
-        this.send(new WebLoaded());
+        this.send(new Web2UnityLoadedMessage());
     }
 
-    send(message: MessageObject): void {
+    send = (message: MessageObject): void => {
         const type = message.constructor as MessageType;
-        const opcode = OpcodeRegistry.findOpcode(type);
+        const opcode = OpcodeTypeRegistry.findOpcode(type);
 
         if (opcode === undefined) {
             // 处理错误：发送了一个未注册的消息类型
             console.error(`Unknown message type: ${type.name}`);
             return;
         }
-        
+
         this.transmit?.(JSON.stringify({ opcode, payload: message }));
     }
 
-    sendAsync<TResponse extends ResponseObject>(message: RequestObject): Promise<TResponse> {
+    sendAsync = <TResponse extends ResponseObject>(message: RequestObject): Promise<TResponse> => {
         const type = message.constructor as RequestType;
-        const opcode = OpcodeRegistry.findOpcode(type);
+        const opcode = OpcodeTypeRegistry.findOpcode(type);
 
         if (opcode === undefined) {
             console.error(`Unknown message type: ${type.name}`);
@@ -86,7 +87,7 @@ class UnitySessionType {
     }
 
     private receive = (opcode: number, content: string) => {
-        const type = OpcodeRegistry.findType(opcode);
+        const type = OpcodeTypeRegistry.findType(opcode);
         if (type === undefined) {
             console.error(`Unknown message type: ${opcode}`);
             return;

@@ -1,5 +1,3 @@
-import { UnitySession } from "./UnitySession";
-
 export interface IMessage { }
 
 export interface IRequest extends IMessage {
@@ -11,12 +9,13 @@ export interface IResponse extends IRequest {
     message?: string;
 }
 
-export interface IWebMessage extends IMessage {
-}
-
+export interface IWebMessage extends IMessage { }
 export interface IWebRequest extends IWebMessage, IRequest { }
-
 export interface IWebResponse extends IWebMessage, IResponse { }
+
+export interface ISessionMessage extends IMessage { }
+export interface ISessionRequest extends ISessionMessage, IRequest { }
+export interface ISessionResponse extends ISessionMessage, IResponse { }
 
 export class MessageObject implements IMessage {
 }
@@ -101,7 +100,7 @@ export abstract class WebRequestHandler<TRequestType extends RequestObject = Req
             }
 
             response.requestId = requestId;
-            UnitySession.send(response);
+            window.send(response);
         } catch (error) {
             console.error(error);
         }

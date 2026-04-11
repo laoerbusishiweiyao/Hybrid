@@ -1,5 +1,14 @@
-import { UnitySession } from "./Session/UnitySession";
-import { WebTouchData, TouchPhase } from "./Session/Message";
+import { Web2UnityTouchDataMessage } from "./generated/message/Message";
+import { UnitySession } from "./Message/UnitySession";
+
+const TouchPhase = {
+    None: 0,
+    Began: 1,
+    Moved: 2,
+    Ended: 3,
+    Canceled: 4,
+    Stationary: 5,
+} as const;
 
 class InputSystemType {
     private readonly devicePixelRatio: number;
@@ -52,14 +61,14 @@ class InputSystemType {
         }
     }
 
-    private processTouchEvent(touch: Touch, phase: typeof TouchPhase[keyof typeof TouchPhase], _: TouchEvent): void {
+    private processTouchEvent(touch: Touch, phase: number, _: TouchEvent): void {
         const { identifier, clientX, clientY } = touch;
         if (this.isWebUIElement(clientX, clientY)) {
             return;
         }
 
         const { x, y } = this.convertToUnityCoordinates(clientX, clientY);
-        UnitySession.send(new WebTouchData(identifier, phase, x, y));
+        UnitySession.send(new Web2UnityTouchDataMessage(identifier, phase, x, y));
     }
 
     // private addPointerEventListener() {

@@ -1,13 +1,13 @@
-import { Opcode } from "@runtime/Opcode";
-import { BrowserInformationRequestHandler, UnityInitializedHandler } from "./Handler/BrowserInformationRequestHandler";
+import { Opcode } from "@runtime/generated/message/Opcode";
+import { UnityInitializedHandler, BrowserInformationRequestHandler } from "../Session/Handler/BrowserInformationRequestHandler";
 import type { IWebMessageHandler } from "./IMessage";
 
 class UnityMessageDispatcherType {
     private readonly allHandler = new Map<number, IWebMessageHandler[]>();
 
     constructor() {
-        this.allHandler.set(Opcode.UnityInitialized, [new UnityInitializedHandler()]);
-        this.allHandler.set(Opcode.BrowserInformationRequest, [new BrowserInformationRequestHandler()]);
+		this.allHandler.set(Opcode.Unity2WebLoadedMessage, [new UnityInitializedHandler()]);
+		this.allHandler.set(Opcode.Unity2WebUserAgentRequest, [new BrowserInformationRequestHandler()]);
     }
 
     handle(opcode: number, message: Object) {
@@ -16,7 +16,7 @@ class UnityMessageDispatcherType {
             console.warn(`消息 ${opcode} 无处理器`);
             return;
         }
-        
+
         for (const handler of handlers) {
             try {
                 handler.handle(message);

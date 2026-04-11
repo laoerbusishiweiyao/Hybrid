@@ -11,6 +11,8 @@ declare interface Window {
     platform: 'windows' | 'android' | 'ios' | 'macos' | 'linux';
 
     bridge: NativeBridge;
+
+    send(message: Object): void;
     receive(opcode: number, content: string): void;
 
     cefSharp: CefSharp;

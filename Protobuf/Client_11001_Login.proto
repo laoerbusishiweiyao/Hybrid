@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package Chaos;
+
+// ResponseType NetClient2MainLoginResponse
+message Main2NetClientLoginRequest // IRequest
+{
+  int32 request_id = 1;
+
+  int32  owner_fiber_id = 2;
+  string address        = 3;
+
+  string account  = 4;
+  string password = 5;
+}
+
+message NetClient2MainLoginResponse // IResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+
+  int64 player_id = 4;
+}
+
+// ResponseType Gate2ClientPingResponse
+message Client2GatePingRequest // ISessionRequest
+{
+  int32 request_id = 1;
+}
+
+message Gate2ClientPingResponse // ISessionResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+
+  int64 time = 4;
+}
+
+// ResponseType Realm2ClientLoginResponse
+message Client2RealmLoginRequest // ISessionRequest
+{
+  int32 request_id = 1;
+
+  string account  = 2;
+  string password = 3;
+}
+
+message Realm2ClientLoginResponse // ISessionResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+
+  string address = 4;
+  int64  token   = 5;
+  int64  gate_id = 6;
+}
+
+// ResponseType Gate2ClientLoginResponse
+message Client2GateLoginRequest // ISessionRequest
+{
+  int32 request_id = 1;
+  int64 token      = 2;
+  int64 gate_id    = 3;
+}
+
+message Gate2ClientLoginResponse // ISessionResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+
+  int64 player_id = 4;
+}
+
+// ResponseType Gate2ClientLogoutResponse
+message Client2GateLogoutRequest // ISessionRequest
+{
+  int32 request_id = 1;
+}
+
+message Gate2ClientLogoutResponse // ISessionResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+}

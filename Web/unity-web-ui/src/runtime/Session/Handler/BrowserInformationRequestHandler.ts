@@ -1,29 +1,29 @@
 import { ApplicationContext } from "@runtime/ApplicationContext";
-import { MessageObject, ResponseObject, WebMessageHandler, WebRequestHandler, type MessageType, type ResponseType } from "../IMessage";
-import { BrowserInformationRequest, BrowserInformationResponse, UnityInitialized } from "../Message";
+import { Unity2WebLoadedMessage, Unity2WebUserAgentRequest, Web2UnityUserAgentResponse } from "@runtime/generated/message/Message";
+import { WebMessageHandler, type MessageType, type ResponseType, MessageObject, ResponseObject, WebRequestHandler } from "@runtime/Message/IMessage";
 
-export class UnityInitializedHandler extends WebMessageHandler<UnityInitialized> {
+export class UnityInitializedHandler extends WebMessageHandler<Unity2WebLoadedMessage> {
     get messageType(): MessageType<MessageObject> {
-        return UnityInitialized;
+        return Unity2WebLoadedMessage;
     }
     get responseType(): ResponseType<ResponseObject> | null {
         return null;
     }
 
-    protected async runAsync(message: UnityInitialized): Promise<void> {
-        console.log('receive unity initialized', message);
+    protected async runAsync(_: Unity2WebLoadedMessage): Promise<void> {
+        console.log('unity loaded');
         ApplicationContext.messages.push('receive unity initialized')
     }
 }
 
-export class BrowserInformationRequestHandler extends WebRequestHandler<BrowserInformationRequest, BrowserInformationResponse> {
+export class BrowserInformationRequestHandler extends WebRequestHandler<Unity2WebUserAgentRequest, Web2UnityUserAgentResponse> {
     get messageType(): MessageType<MessageObject> {
-        return BrowserInformationRequest
+        return Unity2WebUserAgentRequest
     }
     get responseType(): ResponseType<ResponseObject> {
-        return BrowserInformationResponse
+        return Web2UnityUserAgentResponse
     }
-    protected async runAsync(_: BrowserInformationRequest, response: BrowserInformationResponse): Promise<void> {
+    protected async runAsync(_: Unity2WebUserAgentRequest, response: Web2UnityUserAgentResponse): Promise<void> {
         response.userAgent = navigator.userAgent;
     }
 }

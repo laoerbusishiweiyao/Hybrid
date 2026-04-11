@@ -1,10 +1,15 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { VitePluginMessageDispatcher } from './scripts/vite-plugin-message-dispatcher';
 
 export default defineConfig({
   plugins: [
     vue(),
+    VitePluginMessageDispatcher({
+      src: resolve(__dirname, 'src'),
+      output: resolve(__dirname, 'src/runtime/Message/UnityMessageDispatcher.ts'),
+    }),
   ],
   resolve: {
     alias: [

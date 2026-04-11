@@ -160,6 +160,30 @@ app.UseSerilogRequestLogging();
 
 #endregion
 
+#region cdn
+
+{
+    var physicalPath = "cdn";
+    Log.Information("Cdn path: {path}", physicalPath);
+    var cdnPath = Path.Combine(builder.Environment.ContentRootPath, physicalPath);
+    if (!Directory.Exists(cdnPath))
+    {
+        Directory.CreateDirectory(cdnPath);
+    }
+
+    var contentTypeProvider = new FileExtensionContentTypeProvider();
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, physicalPath)),
+        RequestPath = new PathString("/cdn"),
+        ContentTypeProvider = contentTypeProvider,
+        ServeUnknownFileTypes = true,
+        DefaultContentType = "application/octet-stream",
+    });
+}
+
+#endregion
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

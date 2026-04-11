@@ -5,7 +5,6 @@ using Serilog;
 Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-
 Console.CancelKeyPress += (_, eventArgs) =>
 {
     eventArgs.Cancel = true;

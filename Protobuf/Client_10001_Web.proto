@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package Chaos;
+
+message Web2UnityLoadedMessage // IWebMessage
+{
+}
+
+message Unity2WebLoadedMessage // IWebMessage
+{
+}
+
+message Wpf2UnityLoadedMessage // IWebMessage
+{
+  int32 process_id = 1;
+}
+
+message Unity2WpfFocusChangedMessage // IWebMessage
+{
+  bool has_focus = 1;
+}
+
+// ResponseType Unity2WebVersionResponse
+message Web2UnityVersionRequest // IWebRequest
+{
+  int32 request_id = 1;
+}
+
+message Unity2WebVersionResponse // IWebResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+
+  string version       = 4;
+  string unity_version = 5;
+}
+
+// ResponseType Web2UnityUserAgentResponse
+message Unity2WebUserAgentRequest // IWebRequest
+{
+  int32 request_id = 1;
+}
+
+message Web2UnityUserAgentResponse // IWebResponse
+{
+  int32  request_id  = 1;
+  int32  status_code = 2;
+  string message     = 3;
+
+  string user_agent = 4;
+}
+
+message Web2UnityTouchDataMessage // IWebMessage
+{
+  int32 id    = 1;
+  int32 phase = 2;
+  int32 x     = 3;
+  int32 y     = 4;
+}
+
+message Web2UnityMouseDataMessage // IWebMessage
+{
+  int32          buttons = 1;
+  int32          x       = 2;
+  int32          y       = 3;
+  optional int32 delta_x  = 4;
+  optional int32 delta_y  = 5;
+}

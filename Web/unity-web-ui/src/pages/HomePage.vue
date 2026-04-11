@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ApplicationContext } from '@runtime/ApplicationContext';
-import type { ResponseObject } from '@runtime/Session/IMessage';
-import { UnityInformationRequest, WebLoaded } from '@runtime/Session/Message';
-import { UnitySession } from '@runtime/Session/UnitySession';
+import { Web2UnityLoadedMessage, Web2UnityVersionRequest } from '@runtime/generated/message/Message';
+import type { ResponseObject } from '@runtime/Message/IMessage';
+import { UnitySession } from '@runtime/Message/UnitySession';
 import { ref } from 'vue';
 
 const count = ref(0);
@@ -11,7 +11,7 @@ const response = ref<ResponseObject | null>(null);
 let isSending = false;
 
 function onSend() {
-    UnitySession.send(new WebLoaded());
+    UnitySession.send(new Web2UnityLoadedMessage());
 }
 
 async function onSendAsync() {
@@ -21,7 +21,7 @@ async function onSendAsync() {
     count.value++;
     isSending = true;
     const start = Date.now();
-    response.value = await UnitySession.sendAsync(new UnityInformationRequest());
+    response.value = await UnitySession.sendAsync(new Web2UnityVersionRequest());
     duration.value = Date.now() - start;
     isSending = false;
 }

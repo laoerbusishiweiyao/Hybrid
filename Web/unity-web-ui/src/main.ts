@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import { RouterContext } from '@runtime/RouterContext'
 import '@runtime/InputSystem'
-import '@runtime/Session/UnitySession'
+import '@runtime/Message/UnitySession'
 
 window.addEventListener('DOMContentLoaded', OnDOMContentLoaded);
 window.addEventListener('load', OnWindowLoad);
