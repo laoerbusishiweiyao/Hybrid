@@ -4,6 +4,26 @@ using System.Collections.Generic;
 namespace Chaos
 {
 	[MemoryPackable]
+	[Message(Opcode.Wpf2UnityLoadedMessage)]
+	public sealed partial class Wpf2UnityLoadedMessage : MessageObject, IWebMessage
+	{
+		public static Wpf2UnityLoadedMessage Create(bool isFromPool = false)
+		{
+			return ObjectPool.Rent<Wpf2UnityLoadedMessage>(isFromPool);
+		}
+		[MemoryPackOrder(1)]
+		public int ProcessId { get; set; }
+		public override void Dispose()
+		{
+			if (!IsFromPool)
+			{
+				return;
+			}
+			ProcessId = default;
+			ObjectPool.Recycle(this);
+		}
+	}
+	[MemoryPackable]
 	[Message(Opcode.Web2UnityLoadedMessage)]
 	public sealed partial class Web2UnityLoadedMessage : MessageObject, IWebMessage
 	{
@@ -38,26 +58,6 @@ namespace Chaos
 		}
 	}
 	[MemoryPackable]
-	[Message(Opcode.Wpf2UnityLoadedMessage)]
-	public sealed partial class Wpf2UnityLoadedMessage : MessageObject, IWebMessage
-	{
-		public static Wpf2UnityLoadedMessage Create(bool isFromPool = false)
-		{
-			return ObjectPool.Rent<Wpf2UnityLoadedMessage>(isFromPool);
-		}
-		[MemoryPackOrder(1)]
-		public int ProcessId { get; set; }
-		public override void Dispose()
-		{
-			if (!IsFromPool)
-			{
-				return;
-			}
-			ProcessId = default;
-			ObjectPool.Recycle(this);
-		}
-	}
-	[MemoryPackable]
 	[Message(Opcode.Unity2WpfFocusChangedMessage)]
 	public sealed partial class Unity2WpfFocusChangedMessage : MessageObject, IWebMessage
 	{
@@ -74,6 +74,23 @@ namespace Chaos
 				return;
 			}
 			HasFocus = default;
+			ObjectPool.Recycle(this);
+		}
+	}
+	[MemoryPackable]
+	[Message(Opcode.Unity2WpfShutdownMessage)]
+	public sealed partial class Unity2WpfShutdownMessage : MessageObject, IWebMessage
+	{
+		public static Unity2WpfShutdownMessage Create(bool isFromPool = false)
+		{
+			return ObjectPool.Rent<Unity2WpfShutdownMessage>(isFromPool);
+		}
+		public override void Dispose()
+		{
+			if (!IsFromPool)
+			{
+				return;
+			}
 			ObjectPool.Recycle(this);
 		}
 	}
@@ -243,15 +260,16 @@ namespace Chaos
 	}
 	public static partial class Opcode
 	{
-		public const ushort Web2UnityLoadedMessage = 10001;
-		public const ushort Unity2WebLoadedMessage = 10002;
-		public const ushort Wpf2UnityLoadedMessage = 10003;
+		public const ushort Wpf2UnityLoadedMessage = 10001;
+		public const ushort Web2UnityLoadedMessage = 10002;
+		public const ushort Unity2WebLoadedMessage = 10003;
 		public const ushort Unity2WpfFocusChangedMessage = 10004;
-		public const ushort Web2UnityVersionRequest = 10005;
-		public const ushort Unity2WebVersionResponse = 10006;
-		public const ushort Unity2WebUserAgentRequest = 10007;
-		public const ushort Web2UnityUserAgentResponse = 10008;
-		public const ushort Web2UnityTouchDataMessage = 10009;
-		public const ushort Web2UnityMouseDataMessage = 10010;
+		public const ushort Unity2WpfShutdownMessage = 10005;
+		public const ushort Web2UnityVersionRequest = 10006;
+		public const ushort Unity2WebVersionResponse = 10007;
+		public const ushort Unity2WebUserAgentRequest = 10008;
+		public const ushort Web2UnityUserAgentResponse = 10009;
+		public const ushort Web2UnityTouchDataMessage = 10010;
+		public const ushort Web2UnityMouseDataMessage = 10011;
 	}
 }

@@ -1,9 +1,5 @@
 ﻿import { MessageObject, RequestObject, ResponseObject, type IWebMessage, type IWebRequest, type IWebResponse } from '../../Message/IMessage';
 
-export class Web2UnityLoadedMessage extends MessageObject implements IWebMessage {
-}
-export class Unity2WebLoadedMessage extends MessageObject implements IWebMessage {
-}
 export class Wpf2UnityLoadedMessage extends MessageObject implements IWebMessage {
 	processId!: number;
 	constructor(processId: number) {
@@ -11,12 +7,18 @@ export class Wpf2UnityLoadedMessage extends MessageObject implements IWebMessage
 		this.processId = processId;
 	}
 }
+export class Web2UnityLoadedMessage extends MessageObject implements IWebMessage {
+}
+export class Unity2WebLoadedMessage extends MessageObject implements IWebMessage {
+}
 export class Unity2WpfFocusChangedMessage extends MessageObject implements IWebMessage {
 	hasFocus!: boolean;
 	constructor(hasFocus: boolean) {
 		super();
 		this.hasFocus = hasFocus;
 	}
+}
+export class Unity2WpfShutdownMessage extends MessageObject implements IWebMessage {
 }
 export class Web2UnityVersionRequest extends RequestObject implements IWebRequest {
 }

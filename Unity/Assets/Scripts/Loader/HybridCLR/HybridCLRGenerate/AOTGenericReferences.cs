@@ -11,9 +11,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		"System.Core.dll",
 		"System.Runtime.CompilerServices.Unsafe.dll",
 		"System.Text.Json.dll",
-		"System.Threading.Channels.dll",
 		"System.dll",
 		"Unity.Foundation.dll",
+		"UnityEngine.AndroidJNIModule.dll",
 		"UnityEngine.CoreModule.dll",
 		"mscorlib.dll",
 	};
@@ -24,6 +24,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 
 	// {{ AOT generic types
 	// Chaos.AwakeSystem<object,int>
+	// Chaos.AwakeSystem<object,object,byte>
 	// Chaos.AwakeSystem<object,object>
 	// Chaos.AwakeSystem<object>
 	// Chaos.BiDictionary<int,object>
@@ -39,13 +40,14 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Chaos.EventHandler<object,Chaos.EntrySharedPhaseEventArgs>
 	// Chaos.EventHandler<object,Chaos.UnitChangePositionEventArgs>
 	// Chaos.EventHandler<object,Chaos.UnitChangeRotationEventArgs>
-	// Chaos.EventHandler<object,Chaos.WebUIMessageReceivedEventArgs>
 	// Chaos.EventHandler<object,Chaos.WebUiInitializeFinishEventArgs>
 	// Chaos.EventHandler<object,Chaos.WebUiMessageSentEventArgs>
 	// Chaos.EventSystem<object,Chaos.UpdateEventArgs>
 	// Chaos.IAwake<int>
+	// Chaos.IAwake<object,byte>
 	// Chaos.IAwake<object>
 	// Chaos.IAwakeSystem<int>
+	// Chaos.IAwakeSystem<object,byte>
 	// Chaos.IAwakeSystem<object>
 	// Chaos.IEvent<Chaos.UpdateEventArgs>
 	// Chaos.ISingletonAwake<object>
@@ -61,16 +63,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Chaos.StateMachineWrapper<Chaos.FiberInitialize_Client.<Handle>d__0>
 	// Chaos.StateMachineWrapper<Chaos.FiberInitialize_Sample.<Handle>d__0>
 	// Chaos.StateMachineWrapper<Chaos.FiberInitialize_WebUI.<Handle>d__0>
+	// Chaos.StateMachineWrapper<Chaos.MemoryMappedFileComponentSystem.<SendAsync>d__7>
 	// Chaos.StateMachineWrapper<Chaos.MessageDispatcher.<HandleAsync>d__3>
 	// Chaos.StateMachineWrapper<Chaos.MessageHandler.<Handle>d__1<object,object,object>>
 	// Chaos.StateMachineWrapper<Chaos.MessageHandler.<Handle>d__1<object,object>>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeClientComponentSystem.<ConnectAsync>d__4>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeClientComponentSystem.<StartParseAsync>d__9>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeClientComponentSystem.<WriteAsync>d__6>
-	// Chaos.StateMachineWrapper<Chaos.NamedPipeSessionSystem.<SendAsync>d__4>
 	// Chaos.StateMachineWrapper<Chaos.ObjectWaitSystem.<WaitAsync>d__2<object>>
 	// Chaos.StateMachineWrapper<Chaos.ProcessInnerMessageSenderInfo.<WaitAsync>d__13>
 	// Chaos.StateMachineWrapper<Chaos.ProcessInnerSenderSystem.<>c__DisplayClass10_0.<<CallAsync>g__TimeoutAsync|0>d>
@@ -84,9 +80,11 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// Chaos.StateMachineWrapper<Chaos.Web2UnityVersionRequestHandler.<RunAsync>d__0>
 	// Chaos.StateMachineWrapper<Chaos.WebMessageHandler.<HandleAsync>d__2<object,object>>
 	// Chaos.StateMachineWrapper<Chaos.WebMessageHandler.<HandleAsync>d__2<object>>
-	// Chaos.StateMachineWrapper<Chaos.WebUIMessageReceivedEventHandler.<RunAsync>d__0>
+	// Chaos.StateMachineWrapper<Chaos.WebUiComponentSystem.<SendAsync>d__4>
 	// Chaos.StateMachineWrapper<Chaos.WebUiInitializeFinishEventHandler.<RunAsync>d__0>
 	// Chaos.StateMachineWrapper<Chaos.WebUiMessageSentEventHandler.<RunAsync>d__0>
+	// Chaos.StateMachineWrapper<Chaos.WebViewComponentSystem.<SendAsync>d__8>
+	// Chaos.StateMachineWrapper<Chaos.Wpf2UnityLoadedMessageHandler.<RunAsync>d__0>
 	// Chaos.ThreadTask<int>
 	// Chaos.ThreadTask<object>
 	// Chaos.ThreadTaskAsyncMethodBuilder<int>
@@ -110,26 +108,22 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Action<Chaos.MessageInfo>
 	// System.Action<Chaos.SessionMessageDispatcherInfo>
 	// System.Action<Chaos.WebMessageDispatcherInfo>
-	// System.Action<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Action<byte>
 	// System.Action<int,object>
 	// System.Action<int>
 	// System.Action<long,int>
 	// System.Action<long,object>
-	// System.Action<object,System.Threading.CancellationToken>
 	// System.Action<object,object>
 	// System.Action<object>
 	// System.ArraySegment.Enumerator<byte>
 	// System.ArraySegment.Enumerator<ushort>
 	// System.ArraySegment<byte>
 	// System.ArraySegment<ushort>
+	// System.Buffers.ArrayPool<byte>
 	// System.Buffers.IBufferWriter<byte>
-	// System.Buffers.MemoryManager<byte>
-	// System.Buffers.ReadOnlySequence.<>c<byte>
-	// System.Buffers.ReadOnlySequence.Enumerator<byte>
-	// System.Buffers.ReadOnlySequence<byte>
-	// System.Buffers.ReadOnlySequenceSegment<byte>
-	// System.Buffers.SpanAction<ushort,System.Buffers.ReadOnlySequence<ushort>>
+	// System.Buffers.TlsOverPerCoreLockedStacksArrayPool.LockedStack<byte>
+	// System.Buffers.TlsOverPerCoreLockedStacksArrayPool.PerCoreLockedStacks<byte>
+	// System.Buffers.TlsOverPerCoreLockedStacksArrayPool<byte>
 	// System.ByReference<byte>
 	// System.ByReference<ushort>
 	// System.Collections.Concurrent.ConcurrentDictionary.<GetEnumerator>d__35<int,object>
@@ -212,9 +206,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.EqualityComparer<Chaos.FiberInstanceId>
 	// System.Collections.Generic.EqualityComparer<Chaos.ProcessInnerMessageSenderInfo>
 	// System.Collections.Generic.EqualityComparer<Chaos.RequestInfo>
-	// System.Collections.Generic.EqualityComparer<System.IO.Pipelines.FlushResult>
-	// System.Collections.Generic.EqualityComparer<System.IO.Pipelines.ReadResult>
-	// System.Collections.Generic.EqualityComparer<System.ValueTuple<ushort,object>>
 	// System.Collections.Generic.EqualityComparer<byte>
 	// System.Collections.Generic.EqualityComparer<double>
 	// System.Collections.Generic.EqualityComparer<int>
@@ -224,8 +215,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.HashSet.Enumerator<object>
 	// System.Collections.Generic.HashSet<object>
 	// System.Collections.Generic.HashSetEqualityComparer<object>
-	// System.Collections.Generic.IAsyncEnumerable<System.ValueTuple<ushort,object>>
-	// System.Collections.Generic.IAsyncEnumerator<System.ValueTuple<ushort,object>>
 	// System.Collections.Generic.ICollection<Chaos.MessageDispatcherInfo>
 	// System.Collections.Generic.ICollection<Chaos.MessageInfo>
 	// System.Collections.Generic.ICollection<Chaos.RequestInfo>
@@ -324,9 +313,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectEqualityComparer<Chaos.FiberInstanceId>
 	// System.Collections.Generic.ObjectEqualityComparer<Chaos.ProcessInnerMessageSenderInfo>
 	// System.Collections.Generic.ObjectEqualityComparer<Chaos.RequestInfo>
-	// System.Collections.Generic.ObjectEqualityComparer<System.IO.Pipelines.FlushResult>
-	// System.Collections.Generic.ObjectEqualityComparer<System.IO.Pipelines.ReadResult>
-	// System.Collections.Generic.ObjectEqualityComparer<System.ValueTuple<ushort,object>>
 	// System.Collections.Generic.ObjectEqualityComparer<byte>
 	// System.Collections.Generic.ObjectEqualityComparer<double>
 	// System.Collections.Generic.ObjectEqualityComparer<int>
@@ -367,20 +353,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Comparison<Chaos.WebMessageDispatcherInfo>
 	// System.Comparison<int>
 	// System.Comparison<object>
-	// System.Func<System.IO.Pipelines.FlushResult>
-	// System.Func<System.IO.Pipelines.ReadResult>
-	// System.Func<System.ValueTuple<ushort,object>>
-	// System.Func<System.VoidResult>
-	// System.Func<byte>
 	// System.Func<int,object,object>
 	// System.Func<int,object>
-	// System.Func<int>
-	// System.Func<object,System.IO.Pipelines.FlushResult>
-	// System.Func<object,System.IO.Pipelines.ReadResult>
-	// System.Func<object,System.ValueTuple<ushort,object>>
-	// System.Func<object,System.VoidResult>
 	// System.Func<object,byte>
-	// System.Func<object,int>
 	// System.Func<object,object,byte>
 	// System.Func<object,object,object>
 	// System.Func<object,object>
@@ -388,7 +363,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.IEquatable<object>
 	// System.Linq.Buffer<Chaos.RequestInfo>
 	// System.Linq.Buffer<object>
-	// System.Memory<byte>
 	// System.Nullable<byte>
 	// System.Nullable<int>
 	// System.Predicate<Chaos.MessageDispatcherInfo>
@@ -397,58 +371,15 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Predicate<Chaos.WebMessageDispatcherInfo>
 	// System.Predicate<int>
 	// System.Predicate<object>
-	// System.ReadOnlyMemory<byte>
-	// System.ReadOnlySpan.Enumerator<byte>
-	// System.ReadOnlySpan.Enumerator<ushort>
 	// System.ReadOnlySpan<byte>
 	// System.ReadOnlySpan<ushort>
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<byte>
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<int>
 	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder<object>
-	// System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder<System.ValueTuple<ushort,object>>
 	// System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder<object>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<System.VoidResult>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<byte>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<int>
 	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter<object>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<System.VoidResult>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<byte>
-	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<int>
 	// System.Runtime.CompilerServices.ConfiguredTaskAwaitable<object>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable.ConfiguredValueTaskAwaiter<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable.ConfiguredValueTaskAwaiter<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable.ConfiguredValueTaskAwaiter<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable.ConfiguredValueTaskAwaiter<byte>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable.ConfiguredValueTaskAwaiter<int>
 	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable.ConfiguredValueTaskAwaiter<object>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<byte>
-	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<int>
 	// System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<object>
-	// System.Runtime.CompilerServices.TaskAwaiter<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.TaskAwaiter<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.TaskAwaiter<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.TaskAwaiter<System.VoidResult>
-	// System.Runtime.CompilerServices.TaskAwaiter<byte>
-	// System.Runtime.CompilerServices.TaskAwaiter<int>
 	// System.Runtime.CompilerServices.TaskAwaiter<object>
-	// System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.FlushResult>
-	// System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.ReadResult>
-	// System.Runtime.CompilerServices.ValueTaskAwaiter<System.ValueTuple<ushort,object>>
-	// System.Runtime.CompilerServices.ValueTaskAwaiter<byte>
-	// System.Runtime.CompilerServices.ValueTaskAwaiter<int>
-	// System.Runtime.CompilerServices.ValueTaskAwaiter<object>
 	// System.Span.Enumerator<byte>
 	// System.Span.Enumerator<ushort>
 	// System.Span<byte>
@@ -469,62 +400,12 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Text.Json.Serialization.Metadata.JsonTypeInfo.<>c__DisplayClass37_0<object>
 	// System.Text.Json.Serialization.Metadata.JsonTypeInfo.<>c__DisplayClass37_1<object>
 	// System.Text.Json.Serialization.Metadata.JsonTypeInfo<object>
-	// System.Threading.Channels.AsyncOperation<object,System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.AsyncOperation<object,byte>
-	// System.Threading.Channels.AsyncOperation<object>
-	// System.Threading.Channels.BlockedReadAsyncOperation<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.Channel<System.ValueTuple<ushort,object>,System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.Channel<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.ChannelReader.<ReadAllAsync>d__12<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.ChannelReader<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.ChannelWriter<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.UnboundedChannel.<>c<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.UnboundedChannel.UnboundedChannelReader<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.UnboundedChannel.UnboundedChannelWriter<System.ValueTuple<ushort,object>>
-	// System.Threading.Channels.UnboundedChannel<System.ValueTuple<ushort,object>>
-	// System.Threading.ContextCallback<System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore<byte>>
-	// System.Threading.Tasks.Sources.IValueTaskSource<System.IO.Pipelines.FlushResult>
-	// System.Threading.Tasks.Sources.IValueTaskSource<System.IO.Pipelines.ReadResult>
-	// System.Threading.Tasks.Sources.IValueTaskSource<System.ValueTuple<ushort,object>>
-	// System.Threading.Tasks.Sources.IValueTaskSource<byte>
-	// System.Threading.Tasks.Sources.IValueTaskSource<int>
 	// System.Threading.Tasks.Sources.IValueTaskSource<object>
-	// System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore.<>c<byte>
-	// System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore<byte>
-	// System.Threading.Tasks.Task<System.IO.Pipelines.FlushResult>
-	// System.Threading.Tasks.Task<System.IO.Pipelines.ReadResult>
-	// System.Threading.Tasks.Task<System.ValueTuple<ushort,object>>
-	// System.Threading.Tasks.Task<System.VoidResult>
-	// System.Threading.Tasks.Task<byte>
-	// System.Threading.Tasks.Task<int>
 	// System.Threading.Tasks.Task<object>
-	// System.Threading.Tasks.TaskCompletionSource<System.VoidResult>
-	// System.Threading.Tasks.TaskFactory<System.IO.Pipelines.FlushResult>
-	// System.Threading.Tasks.TaskFactory<System.IO.Pipelines.ReadResult>
-	// System.Threading.Tasks.TaskFactory<System.ValueTuple<ushort,object>>
-	// System.Threading.Tasks.TaskFactory<System.VoidResult>
-	// System.Threading.Tasks.TaskFactory<byte>
-	// System.Threading.Tasks.TaskFactory<int>
 	// System.Threading.Tasks.TaskFactory<object>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c<System.IO.Pipelines.FlushResult>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c<System.IO.Pipelines.ReadResult>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c<System.ValueTuple<ushort,object>>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c<byte>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c<int>
 	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask.<>c<object>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask<System.IO.Pipelines.FlushResult>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask<System.IO.Pipelines.ReadResult>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask<System.ValueTuple<ushort,object>>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask<byte>
-	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask<int>
 	// System.Threading.Tasks.ValueTask.ValueTaskSourceAsTask<object>
-	// System.Threading.Tasks.ValueTask<System.IO.Pipelines.FlushResult>
-	// System.Threading.Tasks.ValueTask<System.IO.Pipelines.ReadResult>
-	// System.Threading.Tasks.ValueTask<System.ValueTuple<ushort,object>>
-	// System.Threading.Tasks.ValueTask<byte>
-	// System.Threading.Tasks.ValueTask<int>
 	// System.Threading.Tasks.ValueTask<object>
-	// System.Tuple<object,object>
 	// System.ValueTuple<Chaos.FiberInstanceId,object>
 	// System.ValueTuple<ushort,object>
 	// }}
@@ -532,18 +413,20 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	public void RefMethods()
 	{
 		// Chaos.ThreadTask<object> Chaos.CancelSignalExtensions.TimeoutAsync<object>(Chaos.ThreadTask<object>,long)
-		// object Chaos.Entity.AddChild<object>(bool)
 		// object Chaos.Entity.AddChildWithId<object,object>(long,object,bool)
 		// object Chaos.Entity.AddComponent<object,int>(int,bool)
+		// object Chaos.Entity.AddComponent<object,object,byte>(object,byte,bool)
 		// object Chaos.Entity.AddComponent<object,object>(object,bool)
 		// object Chaos.Entity.AddComponent<object>(bool)
 		// object Chaos.Entity.AddComponentWithId<object,int>(long,int,bool)
+		// object Chaos.Entity.AddComponentWithId<object,object,byte>(long,object,byte,bool)
 		// object Chaos.Entity.AddComponentWithId<object,object>(long,object,bool)
 		// object Chaos.Entity.AddComponentWithId<object>(long,bool)
 		// object Chaos.Entity.GetChild<object>(long)
 		// object Chaos.Entity.GetComponent<object>()
 		// object Chaos.Entity.GetParent<object>()
 		// System.Void Chaos.EntitySystemRegistry.Awake<int>(Chaos.Entity,int)
+		// System.Void Chaos.EntitySystemRegistry.Awake<object,byte>(Chaos.Entity,object,byte)
 		// System.Void Chaos.EntitySystemRegistry.Awake<object>(Chaos.Entity,object)
 		// object Chaos.EventSystem.GetInvoker<object,Chaos.MailboxInvokeEventArgs>(long)
 		// object Chaos.EventSystem.GetInvoker<object,Chaos.NetComponentOnReadEventArgs>(long)
@@ -551,8 +434,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.EventSystem.Invoke<Chaos.NetComponentOnReadEventArgs>(long,Chaos.NetComponentOnReadEventArgs)
 		// System.Void Chaos.EventSystem.Publish<object,Chaos.UnitChangePositionEventArgs>(object,Chaos.UnitChangePositionEventArgs)
 		// System.Void Chaos.EventSystem.Publish<object,Chaos.UnitChangeRotationEventArgs>(object,Chaos.UnitChangeRotationEventArgs)
-		// System.Void Chaos.EventSystem.Publish<object,Chaos.WebUIMessageReceivedEventArgs>(object,Chaos.WebUIMessageReceivedEventArgs)
-		// System.Void Chaos.EventSystem.Publish<object,Chaos.WebUiMessageSentEventArgs>(object,Chaos.WebUiMessageSentEventArgs)
 		// Chaos.ThreadTask Chaos.EventSystem.PublishAsync<object,Chaos.AppStartInitializeFinishEventArgs>(object,Chaos.AppStartInitializeFinishEventArgs)
 		// Chaos.ThreadTask Chaos.EventSystem.PublishAsync<object,Chaos.EntryClientPhaseEventArgs>(object,Chaos.EntryClientPhaseEventArgs)
 		// Chaos.ThreadTask Chaos.EventSystem.PublishAsync<object,Chaos.EntryServerPhaseEventArgs>(object,Chaos.EntryServerPhaseEventArgs)
@@ -562,15 +443,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.MongoRegister.RegisterStruct<Unity.Mathematics.float3>()
 		// System.Void Chaos.MongoRegister.RegisterStruct<Unity.Mathematics.float4>()
 		// System.Void Chaos.MongoRegister.RegisterStruct<Unity.Mathematics.quaternion>()
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter,Chaos.NamedPipeClientComponentSystem.<ConnectAsync>d__4>(System.Runtime.CompilerServices.TaskAwaiter&,Chaos.NamedPipeClientComponentSystem.<ConnectAsync>d__4&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter,Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5>(System.Runtime.CompilerServices.ValueTaskAwaiter&,Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter,Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7>(System.Runtime.CompilerServices.ValueTaskAwaiter&,Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.FlushResult>,Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8>(System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.FlushResult>&,Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.FlushResult>,Chaos.NamedPipeClientComponentSystem.<WriteAsync>d__6>(System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.FlushResult>&,Chaos.NamedPipeClientComponentSystem.<WriteAsync>d__6&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.ReadResult>,Chaos.NamedPipeClientComponentSystem.<StartParseAsync>d__9>(System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.ReadResult>&,Chaos.NamedPipeClientComponentSystem.<StartParseAsync>d__9&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.ReadResult>,Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7>(System.Runtime.CompilerServices.ValueTaskAwaiter<System.IO.Pipelines.ReadResult>&,Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter<byte>,Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5>(System.Runtime.CompilerServices.ValueTaskAwaiter<byte>&,Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.ValueTaskAwaiter<int>,Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8>(System.Runtime.CompilerServices.ValueTaskAwaiter<int>&,Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.AppStartInitializeFinishEventHandler.<RunAsync>d__0>(object&,Chaos.AppStartInitializeFinishEventHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.Entry.<StartAsync>d__1>(object&,Chaos.Entry.<StartAsync>d__1&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.EntryClientPhaseEventHandler.<RunAsync>d__0>(object&,Chaos.EntryClientPhaseEventHandler.<RunAsync>d__0&)
@@ -581,7 +453,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.MessageDispatcher.<HandleAsync>d__3>(object&,Chaos.MessageDispatcher.<HandleAsync>d__3&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.MessageHandler.<Handle>d__1<object,object,object>>(object&,Chaos.MessageHandler.<Handle>d__1<object,object,object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.MessageHandler.<Handle>d__1<object,object>>(object&,Chaos.MessageHandler.<Handle>d__1<object,object>&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5>(object&,Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.ProcessInnerSenderSystem.<>c__DisplayClass10_0.<<CallAsync>g__TimeoutAsync|0>d>(object&,Chaos.ProcessInnerSenderSystem.<>c__DisplayClass10_0.<<CallAsync>g__TimeoutAsync|0>d&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.SessionMessageHandler.<HandleAsync>d__2<object,object>>(object&,Chaos.SessionMessageHandler.<HandleAsync>d__2<object,object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.SessionMessageHandler.<HandleAsync>d__2<object>>(object&,Chaos.SessionMessageHandler.<HandleAsync>d__2<object>&)
@@ -589,16 +460,18 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.Web2UnityVersionRequestHandler.<RunAsync>d__0>(object&,Chaos.Web2UnityVersionRequestHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.WebMessageHandler.<HandleAsync>d__2<object,object>>(object&,Chaos.WebMessageHandler.<HandleAsync>d__2<object,object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.WebMessageHandler.<HandleAsync>d__2<object>>(object&,Chaos.WebMessageHandler.<HandleAsync>d__2<object>&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.WebUIMessageReceivedEventHandler.<RunAsync>d__0>(object&,Chaos.WebUIMessageReceivedEventHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.WebUiInitializeFinishEventHandler.<RunAsync>d__0>(object&,Chaos.WebUiInitializeFinishEventHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.WebUiMessageSentEventHandler.<RunAsync>d__0>(object&,Chaos.WebUiMessageSentEventHandler.<RunAsync>d__0&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.NamedPipeSessionSystem.<SendAsync>d__4>(object&,Chaos.NamedPipeSessionSystem.<SendAsync>d__4&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.AwaitUnsafeOnCompleted<object,Chaos.Wpf2UnityLoadedMessageHandler.<RunAsync>d__0>(object&,Chaos.Wpf2UnityLoadedMessageHandler.<RunAsync>d__0&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.MemoryMappedFileComponentSystem.<SendAsync>d__7>(object&,Chaos.MemoryMappedFileComponentSystem.<SendAsync>d__7&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.ObjectWaitSystem.<WaitAsync>d__2<object>>(object&,Chaos.ObjectWaitSystem.<WaitAsync>d__2<object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.ProcessInnerMessageSenderInfo.<WaitAsync>d__13>(object&,Chaos.ProcessInnerMessageSenderInfo.<WaitAsync>d__13&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.ProcessInnerSenderSystem.<CallAsync>d__10>(object&,Chaos.ProcessInnerSenderSystem.<CallAsync>d__10&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.RequestInfo.<WaitAsync>d__5>(object&,Chaos.RequestInfo.<WaitAsync>d__5&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.SessionSystem.<CallAsync>d__3>(object&,Chaos.SessionSystem.<CallAsync>d__3&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.SessionSystem.<CallAsync>d__4>(object&,Chaos.SessionSystem.<CallAsync>d__4&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.WebUiComponentSystem.<SendAsync>d__4>(object&,Chaos.WebUiComponentSystem.<SendAsync>d__4&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.AwaitUnsafeOnCompleted<object,Chaos.WebViewComponentSystem.<SendAsync>d__8>(object&,Chaos.WebViewComponentSystem.<SendAsync>d__8&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.AppStartInitializeFinishEventHandler.<RunAsync>d__0>(Chaos.AppStartInitializeFinishEventHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.Entry.<StartAsync>d__1>(Chaos.Entry.<StartAsync>d__1&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.EntryClientPhaseEventHandler.<RunAsync>d__0>(Chaos.EntryClientPhaseEventHandler.<RunAsync>d__0&)
@@ -614,12 +487,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.MessageDispatcher.<HandleAsync>d__3>(Chaos.MessageDispatcher.<HandleAsync>d__3&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.MessageHandler.<Handle>d__1<object,object,object>>(Chaos.MessageHandler.<Handle>d__1<object,object,object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.MessageHandler.<Handle>d__1<object,object>>(Chaos.MessageHandler.<Handle>d__1<object,object>&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.NamedPipeClientComponentSystem.<ConnectAsync>d__4>(Chaos.NamedPipeClientComponentSystem.<ConnectAsync>d__4&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5>(Chaos.NamedPipeClientComponentSystem.<ExecuteAsync>d__5&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.NamedPipeClientComponentSystem.<StartParseAsync>d__9>(Chaos.NamedPipeClientComponentSystem.<StartParseAsync>d__9&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8>(Chaos.NamedPipeClientComponentSystem.<StartReceiveAsync>d__8&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7>(Chaos.NamedPipeClientComponentSystem.<StartSendAsync>d__7&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.NamedPipeClientComponentSystem.<WriteAsync>d__6>(Chaos.NamedPipeClientComponentSystem.<WriteAsync>d__6&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.ProcessInnerSenderSystem.<>c__DisplayClass10_0.<<CallAsync>g__TimeoutAsync|0>d>(Chaos.ProcessInnerSenderSystem.<>c__DisplayClass10_0.<<CallAsync>g__TimeoutAsync|0>d&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.SessionMessageHandler.<HandleAsync>d__2<object,object>>(Chaos.SessionMessageHandler.<HandleAsync>d__2<object,object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.SessionMessageHandler.<HandleAsync>d__2<object>>(Chaos.SessionMessageHandler.<HandleAsync>d__2<object>&)
@@ -627,11 +494,11 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.Web2UnityVersionRequestHandler.<RunAsync>d__0>(Chaos.Web2UnityVersionRequestHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.WebMessageHandler.<HandleAsync>d__2<object,object>>(Chaos.WebMessageHandler.<HandleAsync>d__2<object,object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.WebMessageHandler.<HandleAsync>d__2<object>>(Chaos.WebMessageHandler.<HandleAsync>d__2<object>&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.WebUIMessageReceivedEventHandler.<RunAsync>d__0>(Chaos.WebUIMessageReceivedEventHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.WebUiInitializeFinishEventHandler.<RunAsync>d__0>(Chaos.WebUiInitializeFinishEventHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.WebUiMessageSentEventHandler.<RunAsync>d__0>(Chaos.WebUiMessageSentEventHandler.<RunAsync>d__0&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder.Start<Chaos.Wpf2UnityLoadedMessageHandler.<RunAsync>d__0>(Chaos.Wpf2UnityLoadedMessageHandler.<RunAsync>d__0&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.CancelSignalExtensions.<TimeoutAsync>d__7<object>>(Chaos.CancelSignalExtensions.<TimeoutAsync>d__7<object>&)
-		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.NamedPipeSessionSystem.<SendAsync>d__4>(Chaos.NamedPipeSessionSystem.<SendAsync>d__4&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.MemoryMappedFileComponentSystem.<SendAsync>d__7>(Chaos.MemoryMappedFileComponentSystem.<SendAsync>d__7&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.ObjectWaitSystem.<WaitAsync>d__2<object>>(Chaos.ObjectWaitSystem.<WaitAsync>d__2<object>&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.ProcessInnerMessageSenderInfo.<WaitAsync>d__13>(Chaos.ProcessInnerMessageSenderInfo.<WaitAsync>d__13&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.ProcessInnerSenderSystem.<CallAsync>d__10>(Chaos.ProcessInnerSenderSystem.<CallAsync>d__10&)
@@ -639,6 +506,8 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.SessionSystem.<CallAsync>d__3>(Chaos.SessionSystem.<CallAsync>d__3&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.SessionSystem.<CallAsync>d__4>(Chaos.SessionSystem.<CallAsync>d__4&)
 		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.ThreadTask.<GetContextAsync>d__31<object>>(Chaos.ThreadTask.<GetContextAsync>d__31<object>&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.WebUiComponentSystem.<SendAsync>d__4>(Chaos.WebUiComponentSystem.<SendAsync>d__4&)
+		// System.Void Chaos.ThreadTaskAsyncMethodBuilder<object>.Start<Chaos.WebViewComponentSystem.<SendAsync>d__8>(Chaos.WebViewComponentSystem.<SendAsync>d__8&)
 		// object Chaos.World.AddSingleton<object,object>(object)
 		// object Chaos.World.AddSingleton<object>()
 		// bool MemoryPack.MemoryPackFormatterProvider.IsRegistered<System.Nullable<int>>()
@@ -666,72 +535,86 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter<object>.WriteUnmanagedWithObjectHeader<byte,int>(byte,byte&,int&)
 		// System.Void MemoryPack.MemoryPackWriter<object>.WriteUnmanagedWithObjectHeader<byte>(byte,byte&)
 		// System.Void Serilog.ILogger.Write<Chaos.FiberInstanceId,int,object>(Serilog.Events.LogEventLevel,string,Chaos.FiberInstanceId,int,object)
+		// System.Void Serilog.ILogger.Write<byte,object>(Serilog.Events.LogEventLevel,string,byte,object)
 		// System.Void Serilog.ILogger.Write<byte>(Serilog.Events.LogEventLevel,string,byte)
+		// System.Void Serilog.ILogger.Write<int>(Serilog.Events.LogEventLevel,string,int)
 		// System.Void Serilog.ILogger.Write<long,object>(Serilog.Events.LogEventLevel,string,long,object)
 		// System.Void Serilog.ILogger.Write<object,object,object>(Serilog.Events.LogEventLevel,string,object,object,object)
 		// System.Void Serilog.ILogger.Write<object,object>(Serilog.Events.LogEventLevel,string,object,object)
 		// System.Void Serilog.ILogger.Write<object>(Serilog.Events.LogEventLevel,string,object)
+		// System.Void Serilog.ILogger.Write<ushort,int>(Serilog.Events.LogEventLevel,string,ushort,int)
 		// System.Void Serilog.ILogger.Write<ushort,object>(Serilog.Events.LogEventLevel,string,ushort,object)
 		// System.Void Serilog.ILogger.Write<ushort>(Serilog.Events.LogEventLevel,string,ushort)
+		// System.Void Serilog.Log.Debug<int>(string,int)
 		// System.Void Serilog.Log.Error<long,object>(string,long,object)
 		// System.Void Serilog.Log.Error<object,object,object>(string,object,object,object)
 		// System.Void Serilog.Log.Error<object,object>(string,object,object)
 		// System.Void Serilog.Log.Error<object>(string,object)
 		// System.Void Serilog.Log.Error<ushort,object>(string,ushort,object)
 		// System.Void Serilog.Log.Error<ushort>(string,ushort)
+		// System.Void Serilog.Log.Information<byte,object>(string,byte,object)
 		// System.Void Serilog.Log.Information<byte>(string,byte)
+		// System.Void Serilog.Log.Information<object,object>(string,object,object)
 		// System.Void Serilog.Log.Information<object>(string,object)
 		// System.Void Serilog.Log.Warning<Chaos.FiberInstanceId,int,object>(string,Chaos.FiberInstanceId,int,object)
 		// System.Void Serilog.Log.Warning<long,object>(string,long,object)
 		// System.Void Serilog.Log.Warning<object>(string,object)
+		// System.Void Serilog.Log.Warning<ushort,int>(string,ushort,int)
 		// System.Void Serilog.Log.Write<Chaos.FiberInstanceId,int,object>(Serilog.Events.LogEventLevel,string,Chaos.FiberInstanceId,int,object)
+		// System.Void Serilog.Log.Write<byte,object>(Serilog.Events.LogEventLevel,string,byte,object)
 		// System.Void Serilog.Log.Write<byte>(Serilog.Events.LogEventLevel,string,byte)
+		// System.Void Serilog.Log.Write<int>(Serilog.Events.LogEventLevel,string,int)
 		// System.Void Serilog.Log.Write<long,object>(Serilog.Events.LogEventLevel,string,long,object)
 		// System.Void Serilog.Log.Write<object,object,object>(Serilog.Events.LogEventLevel,string,object,object,object)
 		// System.Void Serilog.Log.Write<object,object>(Serilog.Events.LogEventLevel,string,object,object)
 		// System.Void Serilog.Log.Write<object>(Serilog.Events.LogEventLevel,string,object)
+		// System.Void Serilog.Log.Write<ushort,int>(Serilog.Events.LogEventLevel,string,ushort,int)
 		// System.Void Serilog.Log.Write<ushort,object>(Serilog.Events.LogEventLevel,string,ushort,object)
 		// System.Void Serilog.Log.Write<ushort>(Serilog.Events.LogEventLevel,string,ushort)
 		// object System.Activator.CreateInstance<object>()
-		// System.Void System.Buffers.BuffersExtensions.CopyTo<byte>(System.Buffers.ReadOnlySequence<byte>&,System.Span<byte>)
-		// System.Void System.Buffers.BuffersExtensions.CopyToMultiSegment<byte>(System.Buffers.ReadOnlySequence<byte>&,System.Span<byte>)
-		// byte[] System.Buffers.BuffersExtensions.ToArray<byte>(System.Buffers.ReadOnlySequence<byte>&)
 		// int System.Collections.Generic.CollectionExtensions.GetValueOrDefault<object,int>(System.Collections.Generic.IReadOnlyDictionary<object,int>,object,int)
+		// System.Void System.IO.UnmanagedMemoryAccessor.Read<byte>(long,byte&)
+		// int System.IO.UnmanagedMemoryAccessor.ReadArray<byte>(long,byte[],int,int)
+		// System.Void System.IO.UnmanagedMemoryAccessor.WriteArray<byte>(long,byte[],int,int)
 		// Chaos.RequestInfo[] System.Linq.Enumerable.ToArray<Chaos.RequestInfo>(System.Collections.Generic.IEnumerable<Chaos.RequestInfo>)
 		// object[] System.Linq.Enumerable.ToArray<object>(System.Collections.Generic.IEnumerable<object>)
-		// System.Span<byte> System.MemoryExtensions.AsSpan<byte>(byte[])
 		// System.Collections.Generic.IEnumerable<object> System.Reflection.CustomAttributeExtensions.GetCustomAttributes<object>(System.Reflection.MemberInfo,bool)
-		// bool System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<int>()
-		// bool System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<ushort>()
+		// bool System.Runtime.CompilerServices.RuntimeHelpers.IsReferenceOrContainsReferences<byte>()
 		// byte& System.Runtime.CompilerServices.Unsafe.Add<byte>(byte&,int)
+		// byte& System.Runtime.CompilerServices.Unsafe.As<byte,byte>(byte&)
 		// System.Nullable<int> System.Runtime.CompilerServices.Unsafe.ReadUnaligned<System.Nullable<int>>(byte&)
 		// byte System.Runtime.CompilerServices.Unsafe.ReadUnaligned<byte>(byte&)
 		// int System.Runtime.CompilerServices.Unsafe.ReadUnaligned<int>(byte&)
-		// int System.Runtime.CompilerServices.Unsafe.ReadUnaligned<int>(byte&)
 		// long System.Runtime.CompilerServices.Unsafe.ReadUnaligned<long>(byte&)
-		// ushort System.Runtime.CompilerServices.Unsafe.ReadUnaligned<ushort>(byte&)
 		// int System.Runtime.CompilerServices.Unsafe.SizeOf<System.Nullable<int>>()
 		// int System.Runtime.CompilerServices.Unsafe.SizeOf<byte>()
-		// int System.Runtime.CompilerServices.Unsafe.SizeOf<int>()
+		// int System.Runtime.CompilerServices.Unsafe.SizeOf<byte>()
 		// int System.Runtime.CompilerServices.Unsafe.SizeOf<int>()
 		// int System.Runtime.CompilerServices.Unsafe.SizeOf<long>()
-		// int System.Runtime.CompilerServices.Unsafe.SizeOf<ushort>()
 		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<System.Nullable<int>>(byte&,System.Nullable<int>)
 		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<byte>(byte&,byte)
 		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<int>(byte&,int)
-		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<int>(byte&,int)
 		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<long>(byte&,long)
-		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<ushort>(byte&,ushort)
-		// byte& System.Runtime.InteropServices.MemoryMarshal.GetReference<byte>(System.ReadOnlySpan<byte>)
-		// byte& System.Runtime.InteropServices.MemoryMarshal.GetReference<byte>(System.Span<byte>)
-		// int System.Runtime.InteropServices.MemoryMarshal.Read<int>(System.ReadOnlySpan<byte>)
-		// ushort System.Runtime.InteropServices.MemoryMarshal.Read<ushort>(System.ReadOnlySpan<byte>)
-		// System.Void System.Runtime.InteropServices.MemoryMarshal.Write<int>(System.Span<byte>,int&)
-		// System.Void System.Runtime.InteropServices.MemoryMarshal.Write<ushort>(System.Span<byte>,ushort&)
+		// uint System.Runtime.InteropServices.SafeBuffer.AlignedSizeOf<byte>()
+		// byte System.Runtime.InteropServices.SafeBuffer.Read<byte>(ulong)
+		// System.Void System.Runtime.InteropServices.SafeBuffer.ReadArray<byte>(ulong,byte[],int,int)
+		// uint System.Runtime.InteropServices.SafeBuffer.SizeOf<byte>()
+		// System.Void System.Runtime.InteropServices.SafeBuffer.WriteArray<byte>(ulong,byte[],int,int)
+		// object System.Text.Json.JsonSerializer.Deserialize<object>(string,System.Text.Json.JsonSerializerOptions)
 		// System.Text.Json.Serialization.Metadata.JsonTypeInfo<object> System.Text.Json.JsonSerializer.GetTypeInfo<object>(System.Text.Json.JsonSerializerOptions)
+		// object System.Text.Json.JsonSerializer.ReadFromSpan<object>(System.ReadOnlySpan<System.Char>,System.Text.Json.Serialization.Metadata.JsonTypeInfo<object>)
+		// object System.Text.Json.JsonSerializer.ReadFromSpan<object>(System.ReadOnlySpan<byte>,System.Text.Json.Serialization.Metadata.JsonTypeInfo<object>,System.Nullable<int>)
 		// string System.Text.Json.JsonSerializer.Serialize<object>(object,System.Text.Json.JsonSerializerOptions)
 		// string System.Text.Json.JsonSerializer.WriteString<object>(object&,System.Text.Json.Serialization.Metadata.JsonTypeInfo<object>)
-		// System.Threading.Channels.Channel<System.ValueTuple<ushort,object>> System.Threading.Channels.Channel.CreateUnbounded<System.ValueTuple<ushort,object>>()
+		// object UnityEngine.AndroidJNIHelper.ConvertFromJNIArray<object>(System.IntPtr)
+		// System.IntPtr UnityEngine.AndroidJNIHelper.GetFieldID<object>(System.IntPtr,string,bool)
+		// object UnityEngine.AndroidJavaObject.FromJavaArrayDeleteLocalRef<object>(System.IntPtr)
+		// object UnityEngine.AndroidJavaObject.GetStatic<object>(string)
+		// object UnityEngine.AndroidJavaObject._GetStatic<object>(System.IntPtr)
+		// object UnityEngine.AndroidJavaObject._GetStatic<object>(string)
+		// object UnityEngine.GameObject.AddComponent<object>()
 		// object UnityEngine.Resources.Load<object>(string)
+		// object UnityEngine._AndroidJNIHelper.ConvertFromJNIArray<object>(System.IntPtr)
+		// System.IntPtr UnityEngine._AndroidJNIHelper.GetFieldID<object>(System.IntPtr,string,bool)
 	}
 }

@@ -19,7 +19,7 @@ public partial class WebWindow : Window
         this.settings = settings;
         this.session = session;
 
-        Log.Information("启动参数: {settings}", settings.Value);
+        Log.Debug("启动参数: {settings}", settings.Value);
 
         InitializeComponent();
         Loaded += OnLoaded;
@@ -45,6 +45,27 @@ public partial class WebWindow : Window
                 {
                     Dispatcher.Invoke(() => OnUnityFocusChanged(payload.HasFocus));
                 }
+            }
+
+            return;
+        }
+
+        if (eventArgs.Opcode is Opcode.Unity2WpfShutdownMessage)
+        {
+            if (JsonSerializer.Deserialize<Unity2WpfShutdownMessage>(eventArgs.Payload) is { } payload)
+            {
+                if (CheckAccess())
+                {
+                    Application.Current.Shutdown();
+                }
+                else
+                {
+                    Dispatcher.Invoke(() => Application.Current.Shutdown());
+                }
+            }
+            else
+            {
+                Log.Warning("Deserialize failed: {opcode} = {eve}", eventArgs.Opcode, eventArgs.Payload);
             }
 
             return;
@@ -83,9 +104,28 @@ public partial class WebWindow : Window
             Top = settings.Value.LaunchOptions.Top;
             Width = settings.Value.LaunchOptions.Width;
             Height = settings.Value.LaunchOptions.Height;
+
+            if (Process.GetProcessById(settings.Value.LaunchOptions.ProcessId) is { HasExited: false } process)
+            {
+                process.EnableRaisingEvents = true;
+                process.Exited += OnProcessExited;
+            }
         }
 
         LoadBrowser();
+    }
+
+    private void OnProcessExited(object? sender, EventArgs eventArgs)
+    {
+        Log.Information("Unity Process {id} exited", settings.Value.LaunchOptions.ProcessId);
+        if (CheckAccess())
+        {
+            Application.Current.Shutdown();
+        }
+        else
+        {
+            Dispatcher.Invoke(() => Application.Current.Shutdown());
+        }
     }
 
     private void LoadBrowser()

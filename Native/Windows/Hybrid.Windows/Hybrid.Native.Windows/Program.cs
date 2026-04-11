@@ -38,31 +38,25 @@ public sealed class Program
             builder.Services.Configure<AppSettings>(builder.Configuration);
             builder.Services.AddSingleton<App>();
             builder.Services.AddSingleton<WebWindow>();
-            
+
             builder.Services.AddSingleton<MemoryMappedFileSession>();
             builder.Services.AddHostedService(serviceProvider => serviceProvider.GetRequiredService<MemoryMappedFileSession>());
 
             var host = builder.Build();
 
             var app = host.Services.GetRequiredService<App>();
-            app.Startup += (_, _) =>
+            app.Startup += async (_, _) =>
             {
                 Log.Information("进程启动({id})", Environment.ProcessId);
-                host.StartAsync().GetAwaiter().GetResult();
+                await host.StartAsync();
             };
-            app.Exit += (_, _) =>
+            app.Exit += async (_, _) =>
             {
-                host.StopAsync().GetAwaiter().GetResult();
+                await host.StopAsync();
 
                 Log.Information("进程退出({id})", Environment.ProcessId);
                 Cef.Shutdown();
-                Log.CloseAndFlush();
-            };
-
-            Console.CancelKeyPress += (_, eventArgs) =>
-            {
-                eventArgs.Cancel = true;
-                app.Dispatcher.InvokeAsync(() => app.Shutdown());
+                await Log.CloseAndFlushAsync();
             };
 
             app.Run();
@@ -73,6 +67,7 @@ public sealed class Program
         }
         finally
         {
+            Log.Information("进程退出({id})", Environment.ProcessId);
             Cef.Shutdown();
             Log.CloseAndFlush();
         }

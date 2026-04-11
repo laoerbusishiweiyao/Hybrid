@@ -2,6 +2,11 @@ syntax = "proto3";
 
 package Chaos;
 
+message Wpf2UnityLoadedMessage // IWebMessage
+{
+  int32 process_id = 1;
+}
+
 message Web2UnityLoadedMessage // IWebMessage
 {
 }
@@ -10,14 +15,13 @@ message Unity2WebLoadedMessage // IWebMessage
 {
 }
 
-message Wpf2UnityLoadedMessage // IWebMessage
-{
-  int32 process_id = 1;
-}
-
 message Unity2WpfFocusChangedMessage // IWebMessage
 {
   bool has_focus = 1;
+}
+
+message Unity2WpfShutdownMessage // IWebMessage
+{
 }
 
 // ResponseType Unity2WebVersionResponse
