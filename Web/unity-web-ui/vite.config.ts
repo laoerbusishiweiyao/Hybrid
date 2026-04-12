@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
-import { VitePluginMessageDispatcher } from './scripts/vite-plugin-message-dispatcher';
+import path, { resolve } from 'path'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import { VitePluginMessageDispatcher } from './scripts/vite-plugin-message-dispatcher'
 
 export default defineConfig({
   plugins: [
     vue(),
+    VueI18nPlugin({
+      include: [path.resolve(__dirname, './src/locales/**')]
+    }),
     VitePluginMessageDispatcher({
       src: resolve(__dirname, 'src'),
       output: resolve(__dirname, 'src/runtime/Message/UnityMessageDispatcher.ts'),

@@ -69,7 +69,7 @@ class RouterContextType {
     constructor() {
         const home = {
             path: '/', name: '', components: {
-                default: () => import('@pages/HomePage.vue'),
+                default: () => import('@pages/Splash/SplashPage.vue'),
             }
         };
         this.Router.addRoute(home);
