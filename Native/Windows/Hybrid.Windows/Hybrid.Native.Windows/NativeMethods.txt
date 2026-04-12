@@ -1,1 +1,3 @@
 timeBeginPeriod
+GetForegroundWindow
+GetWindowThreadProcessId

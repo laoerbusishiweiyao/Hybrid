@@ -38,7 +38,12 @@ namespace Chaos
 
         private static void OnFocusChanged(this WebUiComponent self, bool hasFocus)
         {
-            Log.Information("Focus Changed: {hasFocus}", hasFocus);
+#if !UNITY_EDITOR && UNITY_STANDALONE
+            self.Send(new Unity2WpfFocusChangedMessage
+            {
+                HasFocus = hasFocus
+            });
+#endif
         }
 
         public static void Send(this WebUiComponent self, IMessage message)

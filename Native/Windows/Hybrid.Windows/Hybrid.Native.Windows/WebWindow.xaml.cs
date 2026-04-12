@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Text.Json;
 using System.Windows;
-using System.Windows.Interop;
+using System.Windows.Threading;
+using Windows.Win32;
 using CefSharp;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -14,6 +15,8 @@ public partial class WebWindow : Window
 
     private readonly MemoryMappedFileSession session;
 
+    private DispatcherTimer? dispatcherTimer;
+
     public WebWindow(IOptions<AppSettings> settings, MemoryMappedFileSession session)
     {
         this.settings = settings;
@@ -22,6 +25,9 @@ public partial class WebWindow : Window
         Log.Debug("启动参数: {settings}", settings.Value);
 
         InitializeComponent();
+
+        AddUnityFocusEventListener();
+
         Loaded += OnLoaded;
 
         session.MessageReceived += OnMessageReceived;
@@ -29,14 +35,52 @@ public partial class WebWindow : Window
         Send(Opcode.Wpf2UnityLoadedMessage, new Wpf2UnityLoadedMessage { ProcessId = Environment.ProcessId });
     }
 
+    private void AddUnityFocusEventListener()
+    {
+        if (settings.Value.LaunchOptions.ProcessId is 0)
+        {
+            return;
+        }
+
+        dispatcherTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(100)
+        };
+        dispatcherTimer.Tick += OnDispatcherTimerTick;
+        dispatcherTimer.Start();
+    }
+
+    private void OnDispatcherTimerTick(object? sender, EventArgs eventArgs)
+    {
+        var foregroundWindow = PInvoke.GetForegroundWindow();
+        if (foregroundWindow == IntPtr.Zero)
+        {
+            return;
+        }
+
+        PInvoke.GetWindowThreadProcessId(foregroundWindow, out var processId);
+
+        if (Process.GetProcessById((int)processId) is not { } process)
+        {
+            return;
+        }
+
+        OnUnityFocusChanged(process.ProcessName is "Hybrid.Native.Windows" or "Unity");
+    }
+
     private void OnMessageReceived(object? sender, MemoryMappedFileReceivedEventArgs eventArgs)
     {
         Log.Debug("receive {opcode} = {content}", eventArgs.Opcode, eventArgs.Payload);
 
-        if (eventArgs.Opcode is Opcode.Unity2WpfFocusChangedMessage)
+        switch (eventArgs.Opcode)
         {
-            if (JsonSerializer.Deserialize<Unity2WpfFocusChangedMessage>(eventArgs.Payload) is { } payload)
+            case Opcode.Unity2WpfFocusChangedMessage:
             {
+                if (JsonSerializer.Deserialize<Unity2WpfFocusChangedMessage>(eventArgs.Payload, AppSettings.DefaultJsonSerializerOptions) is not { } payload)
+                {
+                    return;
+                }
+
                 if (CheckAccess())
                 {
                     OnUnityFocusChanged(payload.HasFocus);
@@ -45,15 +89,16 @@ public partial class WebWindow : Window
                 {
                     Dispatcher.Invoke(() => OnUnityFocusChanged(payload.HasFocus));
                 }
+
+                return;
             }
-
-            return;
-        }
-
-        if (eventArgs.Opcode is Opcode.Unity2WpfShutdownMessage)
-        {
-            if (JsonSerializer.Deserialize<Unity2WpfShutdownMessage>(eventArgs.Payload) is { } payload)
+            case Opcode.Unity2WpfShutdownMessage:
             {
+                if (JsonSerializer.Deserialize<Unity2WpfShutdownMessage>(eventArgs.Payload, AppSettings.DefaultJsonSerializerOptions) is not { } payload)
+                {
+                    return;
+                }
+
                 if (CheckAccess())
                 {
                     Application.Current.Shutdown();
@@ -62,21 +107,17 @@ public partial class WebWindow : Window
                 {
                     Dispatcher.Invoke(() => Application.Current.Shutdown());
                 }
-            }
-            else
-            {
-                Log.Warning("Deserialize failed: {opcode} = {eve}", eventArgs.Opcode, eventArgs.Payload);
-            }
 
-            return;
+                return;
+            }
+            default:
+                Browser.EvaluateScriptAsync($"window.receive({eventArgs.Opcode}, {eventArgs.Payload})");
+                break;
         }
-
-        Browser.EvaluateScriptAsync($"window.receive({eventArgs.Opcode}, {eventArgs.Payload})");
     }
 
     private void OnUnityFocusChanged(bool hasFocus)
     {
-        Log.Information("Unity Focus: {hasFocus}", hasFocus);
         if (hasFocus)
         {
             Topmost = true;
@@ -165,8 +206,6 @@ public partial class WebWindow : Window
             {
                 await Task.Delay(10);
             }
-
-            Topmost = true;
 
             if (settings.Value.LaunchOptions.ShowDevTools)
             {
